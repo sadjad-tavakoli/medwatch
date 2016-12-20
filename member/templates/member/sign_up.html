@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form id="signup-form" action="" method="post" novalidate autocomplete="off">
+    {% csrf_token %}
+    <div style="display: none">{{ form.errors }}</div>
+    <div>
+        {% for field in form %}
+            <div>
+
+                {{ field.label }}
+                {{ field }}
+                {% if field.errors %}
+                    {% for error in field.errors %}
+                        {{ error }}
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+        {% endfor %}
+
+    </div>
+    <input type="submit" value="Sign Up" id="join-submit" class="button">
+
+</form>
+</body>
+</html>

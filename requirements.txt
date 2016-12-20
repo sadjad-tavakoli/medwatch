@@ -1,0 +1,9 @@
+Django==1.9.9
+django-admin-bootstrapped==2.5.7
+django-nose==1.4.4
+django-polymorphic==1.0
+pep8==1.7.0
+virtualenv==15.0.3
+virtualenv-clone==0.2.6
+virtualenvwrapper==4.7.2
+WebTest==2.0.23
