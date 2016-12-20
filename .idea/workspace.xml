@@ -2,23 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c5ede772-319a-4ba5-8ea9-c3b4d6cfbeda" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/member/forms/join_forms.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/member/forms/login_form.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/member/models.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/member/templates/member/sign_up.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/member/urls.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/member/views/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/member/views/join_views.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/requirements.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/med_watch/first_app/__init__.py" afterPath="$PROJECT_DIR$/member/__init__.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/med_watch/first_app/test_file.py" afterPath="$PROJECT_DIR$/member/forms/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/med_watch.iml" afterPath="$PROJECT_DIR$/.idea/med_watch.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/med_watch/settings.py" afterPath="$PROJECT_DIR$/med_watch/settings.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/med_watch/urls.py" afterPath="$PROJECT_DIR$/med_watch/urls.py" />
     </list>
     <ignored path="med_watch.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -107,16 +91,6 @@
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="query.py" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/.virtualenvs/med_watch/lib/python3.5/site-packages/django/db/models/query.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="393" column="8" selection-start-line="393" selection-start-column="8" selection-end-line="393" selection-end-column="8" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -549,12 +523,20 @@
       <option name="number" value="Default" />
       <updated>1479639616715</updated>
     </task>
+    <task id="LOCAL-00001" summary="member/ joinview form&#10;">
+      <created>1482253019489</created>
+      <option name="number" value="00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1482253019490</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="49" y="-4" width="1317" height="772" extended-state="6" />
     <editor active="true" />
     <layout>
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -585,6 +567,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="member/ joinview form&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="member/ joinview form&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
