@@ -1,10 +1,21 @@
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import SuspiciousOperation
 from django.core.urlresolvers import reverse
+from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView
 
 from member.forms.profile_forms import EditProfileForm
 from member.models import Member
+
+
+class ProfileView(DetailView):
+    template_name = 'member/profile.html'
+    context_object_name = 'member'
+
+    def get_object(self, queryset=None):
+        username = self.kwargs.get('username', None)
+        member = Member.objects.get(primary_user__username=username)
+        return member
 
 
 class EditProfileView(SuccessMessageMixin, UpdateView):

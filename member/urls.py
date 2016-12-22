@@ -2,9 +2,10 @@ from django.conf.urls import url, include
 
 from member.views.join_views import JoinView
 from member.views.login_views import LoginView, LogoutView
-from member.views.profile_views import EditProfileView
+from member.views.profile_views import EditProfileView, ProfileView
 
 profile_url_patterns = [
+    url(r'^@(?P<username>\w+)/$', ProfileView.as_view(), name='edit'),
     url(r'^edit/$', EditProfileView.as_view(), name='edit'),
 
 ]
