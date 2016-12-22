@@ -1,10 +1,10 @@
 from django.views.generic.edit import CreateView
 
-from member.forms.join_forms import SignUpForm
+from member.forms.join_forms import JoinForm
 from member.models import Member
 
 
-class SignUpView(CreateView):
-    template_name = 'member/sign_up.html'
+class JoinView(CreateView):
+    template_name = 'member/join.html'
     model = Member
-    form_class = SignUpForm
+    form_class = JoinForm

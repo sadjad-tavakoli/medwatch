@@ -10,14 +10,14 @@ username_regex = RegexValidator(regex=r'^[-a-z0-9_]+\Z',
                                         'letters and dashes.')
 
 
-class SignUpForm(forms.ModelForm):
+class JoinForm(forms.ModelForm):
     username = fields_for_model(User)['username']
     email = fields_for_model(User)['email']
     password = fields_for_model(User)['password']
     re_password = forms.CharField(widget=forms.PasswordInput())
 
     def __init__(self, *args, **kwargs):
-        super(SignUpForm, self).__init__(*args, **kwargs)
+        super(JoinForm, self).__init__(*args, **kwargs)
         self.fields['password'].widget = forms.PasswordInput()
         self.fields['email'].required = True
         self.fields['username'].validators = [username_regex]
