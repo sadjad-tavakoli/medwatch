@@ -11,10 +11,25 @@ class AbstractMember(PolymorphicModel):
     birth_date = models.DateField(null=True, blank=True)
     profile_picture = ImageField(upload_to='profile_pictures/', null=True, blank=True)
 
+    def __str__(self):
+        return '{} - {} - {} '.format(self.first_name, self.last_name, self.national_id)
 
 class DoctorMember(AbstractMember):
     primary_user = models.OneToOneField(User, related_name='doctor_member')
+    degree = models.CharField(max_length=40, null=False, default='general practitioner')
+    university = models.CharField(max_length=50, null=False, blank=True)
+    graduate_year = models.IntegerField(default=1360)
 
+    def __str__(self):
+        return '{} - {} - {} - {}'.format(self.primary_user, self.degree, self.university, self.graduate_year)
+
+
+#
+# DEGREECHOICES = (
+#     ('g', 'general practitioner'),
+#     ('s', 'specialist'),
+#     ('e', 'expert')
+# )
 
 class MemberManager(models.Manager):
     @staticmethod

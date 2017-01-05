@@ -6,7 +6,7 @@ from django.forms import ModelForm, fields_for_model
 from django.forms.widgets import PasswordInput
 from django.utils.translation import ugettext_lazy as _
 
-from member.models import Member
+from member.models import Member, DoctorMember
 
 
 class EditProfileForm(ModelForm):
@@ -70,3 +70,21 @@ class EditProfileForm(ModelForm):
                 if password != confirm_password:
                     raise ValidationError(
                         _('Password does not match the confirmed password'))
+
+
+class DrEditProfileForm(forms.ModelForm):
+    class Meta:
+        model = DoctorMember
+        fields = ['first_name', 'last_name', 'degree', 'university', 'graduate_year']
+
+    def clean_first_name(self):
+        data = self.cleaned_data.get('first_name', '')
+        if len(data) == 0:
+            raise forms.ValidationError("Your first name can't be empty.")
+        return data
+
+    def clean_last_name(self):
+        data = self.cleaned_data.get('last_name', '')
+        if len(data) == 0:
+            raise forms.ValidationError("Your last name can't be empty.")
+        return data

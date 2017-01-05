@@ -5,7 +5,7 @@ from django.views.generic.base import View
 
 from med_watch.settings import HOME_REDIRECT_URL
 from member.forms.login_forms import LoginForm
-from member.models import Member
+from member.models import AbstractMember
 
 
 class LoginView(FormView):
@@ -19,7 +19,8 @@ class LoginView(FormView):
 
     def form_valid(self, form):
         data = form.cleaned_data
-        member = Member.get_member_by_email_username(data['username'])
+        # member = Member.get_member_by_email_username(data['username'])
+        user = AbstractMember.get_abstractMember_by_email_username
         user = authenticate(
             username=member.primary_user.username, password=data['password'])
         login(self.request, user)
