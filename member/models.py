@@ -62,3 +62,8 @@ class Member(AbstractMember):
             return user.member
         except(TypeError, User.DoesNotExist, User.MultipleObjectsReturned):
             return None
+
+
+class Agent(models.Model):
+    doctor = models.ForeignKey(DoctorMember, null=False)
+    member = models.ForeignKey(Member, null=False)
