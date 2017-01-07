@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Agents List</title>
+</head>
+<body>
+<h1>Agents List</h1>
+<table>
+<tr>
+    <th>#</th>
+    <th>Username</th>
+    <th>Delete?</th>
+</tr>
+{% for agent in object_list %}
+    <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>agent.user.primary_user.username</td>
+        <td><a href="#">X</a></td>
+    </tr>
+{% endfor %}
+</table>
+</body>
+</html>
