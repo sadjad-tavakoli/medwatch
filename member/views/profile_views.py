@@ -1,10 +1,12 @@
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import SuspiciousOperation
 from django.core.urlresolvers import reverse
+from django.shortcuts import render
+from django.template import RequestContext
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView
 
-from member.forms.profile_forms import EditProfileForm
+from member.forms.profile_forms import EditProfileForm, DrEditProfileForm
 from member.models import Member
 
 
@@ -16,6 +18,18 @@ class ProfileView(DetailView):
         username = self.kwargs.get('username', None)
         member = Member.objects.get(primary_user__username=username)
         return member
+
+
+def DrEditProfile(request):
+    if request.method == "POST":
+        form = DrEditProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return render(request, 'doctor/dr_edit_profile.html', {'form': form, 'user': request.user})
+    else:
+        form = DrEditProfileForm
+    return render(request, 'doctor/dr_edit_profile.html', {'form': form, 'user': request.user},
+                  context_instance=RequestContext(request))
 
 
 class EditProfileView(SuccessMessageMixin, UpdateView):
