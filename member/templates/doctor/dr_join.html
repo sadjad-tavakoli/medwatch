@@ -1,0 +1,21 @@
+{% block page_body %}
+    <div class="form-container">
+        <div class="header">
+            {{ form_title }}
+        </div>
+        <div class="inner-body">
+            <form method="POST" action="">
+                {% csrf_token %}
+                {% for element in form %}
+                    {{ element }}
+                    {% if element.errors != None %}
+                        <p class="error">
+                            {{ element.errors }}
+                        </p>
+                    {% endif %}
+                {% endfor %}
+                <input type="submit" class="submit-button" value="{{ submit_value }}"/>
+            </form>
+        </div>
+    </div>
+{% endblock %}

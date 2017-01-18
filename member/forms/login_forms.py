@@ -14,8 +14,8 @@ class LoginForm(Form):
         username_or_email = data.get('username', None)
         member = Member.get_member_by_email_username(username_or_email)
         if member is None:
-            raise forms.ValidationError(_("نام کاربری یا گذرواژه نادرست است"))
+            raise forms.ValidationError(_("username not valid"))
         password = data.get('password', None)
         if not member.primary_user.check_password(password):
-            raise forms.ValidationError(_("نام کاربری یا گذرواژه نادرست است"))
+            raise forms.ValidationError(_("username or password not correct"))
         return password
