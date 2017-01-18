@@ -1,6 +1,7 @@
 # Created by .ignore support plugin (hsz.mobi)
-.idea
-*.pyc
-__pycache__
+.idea/**
+**.pyc
+__pycache__/**
 
-*/migrations
+*/migrations/**
+templates/
