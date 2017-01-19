@@ -1,13 +1,12 @@
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import SuspiciousOperation
 from django.core.urlresolvers import reverse
-from django.shortcuts import render
-from django.template import RequestContext
+from django.shortcuts import redirect
+from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView
-
 from member.forms.profile_forms import EditProfileForm, DrEditProfileForm
-from member.models import Member, DoctorMember, Agent
+from member.models import Member, DoctorMember
 
 
 class ProfileView(DetailView):
@@ -38,7 +37,7 @@ class DrEditProfile(SuccessMessageMixin, UpdateView):
         return initial
 
     def get_success_url(self):
-        return reverse('members:dr-edit-profile')
+        return reverse('home')
 
     def form_valid(self, form):
         data = form.cleaned_data
@@ -52,15 +51,6 @@ class DrEditProfile(SuccessMessageMixin, UpdateView):
                 user.save()
 
         return super(DrEditProfile, self).form_valid(form)
-    # if request.method == "POST":
-    #     form = DrEditProfileForm(request.POST, request.FILES)
-    #     if form.is_valid():
-    #         form.save()
-    #         return render(request, 'doctor/dr_edit_profile.html', {'form': form, 'user': request.user})
-    # else:
-    #     form = DrEditProfileForm
-    # return render(request, 'doctor/dr_edit_profile.html', {'form': form, 'user': request.user},
-    #               context_instance=RequestContext(request))
 
 
 class EditProfileView(SuccessMessageMixin, UpdateView):
@@ -95,3 +85,26 @@ class EditProfileView(SuccessMessageMixin, UpdateView):
                 user.save()
 
         return super(EditProfileView, self).form_valid(form)
+
+
+class HomeView(TemplateView):
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.is_anonymous():
+            return redirect(reverse('members:login'))
+        return super(HomeView, self).dispatch(request, *args, **kwargs)
+
+    def get_template_names(self):
+        self.template_name = self.get_user_template(self.request)
+        return super(HomeView, self).get_template_names()
+
+    @staticmethod
+    def get_user_template(request):
+        print(request.access_level.is_doctor())
+        print(request.access_level.is_agent())
+        print(request.access_level.is_member())
+        if request.access_level.is_doctor():
+            return 'home_doctor.html'
+        if request.access_level.is_agent():
+            return 'home_agent.html'
+        if request.access_level.is_member():
+            return 'home_member.html'

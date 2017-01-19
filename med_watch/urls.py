@@ -17,9 +17,11 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.generic.base import TemplateView
 
+from member.views.profile_views import HomeView
+
 urlpatterns = [
     url(r'', include('member.urls', namespace='members')),
-    url(r'^home/$', TemplateView.as_view(template_name='home_doctor.html')),
+    url(r'^home/$', HomeView.as_view(), name='home'),
     url(r'^admin/', include(admin.site.urls)),
 
 ]

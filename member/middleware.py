@@ -1,5 +1,4 @@
 from abc import ABCMeta, abstractmethod
-
 from member.models import DoctorMember, Agent
 
 
@@ -32,9 +31,6 @@ class MemberAccessLevel(AbstractAccessLevel):
 class DoctorAccessLevel(AbstractAccessLevel):
     def __init__(self, doctor):
         self.doctor = doctor
-
-    def is_member(self):
-        return True
 
     def is_doctor(self):
         return True
@@ -69,9 +65,8 @@ class MemberMiddleware(object):
             request.access_level = DoctorAccessLevel(doctor=doctor_member)
             return
 
-        agent = Agent.objects.filter(user=request.user).first()
+        agent = Agent.objects.filter(member__primary_user=request.user).first()
         if agent is not None:
             request.access_level = AgentAccessLevel(agent=agent)
             return
-
-        request.access_level = MemberAccessLevel(member=request.user.member)
+        request.access_level = MemberAccessLevel(member=request.user)

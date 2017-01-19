@@ -19,7 +19,6 @@ class LoginView(FormView):
     def form_valid(self, form):
         data = form.cleaned_data
         member, is_dr = AbstractMember.get_member_by_email_username(data['username'])
-        print(member)
         user = authenticate(
             username=member.primary_user.username, password=data['password'])
         login(self.request, user)

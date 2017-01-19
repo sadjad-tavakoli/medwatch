@@ -108,5 +108,5 @@ class Member(AbstractMember):
 
 
 class Agent(models.Model):
-    doctor = models.ForeignKey(DoctorMember, null=False)
-    member = models.ForeignKey(Member, null=False)
+    doctor = models.ForeignKey(DoctorMember, null=False, related_name='agents')
+    member = models.OneToOneField(Member, null=False)

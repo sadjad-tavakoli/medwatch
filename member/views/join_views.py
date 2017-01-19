@@ -13,7 +13,7 @@ class JoinView(CreateView):
     form_class = JoinForm
 
     def get_success_url(self):
-        return reverse(redirect('home'))
+        return reverse('home')
 
 
 class DoctorJoinView(CreateView):
@@ -22,7 +22,7 @@ class DoctorJoinView(CreateView):
     form_class = DoctorJoinForm
 
     def get_success_url(self):
-        return reverse(redirect('home'))
+        return reverse('home')
 
 
 def DrJoinView(request):
