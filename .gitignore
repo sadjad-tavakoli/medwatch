@@ -5,3 +5,8 @@ __pycache__/**
 
 */migrations/**
 templates/
+med_watch/__pycache__/
+member/__pycache__/
+member/forms/__pycache__/
+member/views/__pycache__/
+
