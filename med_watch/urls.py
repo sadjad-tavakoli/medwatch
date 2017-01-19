@@ -18,6 +18,7 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'', include('member.urls', namespace='members')),
+    url(r'', include('schedule.urls', namespace='schedule')),
     url(r'^admin/', include(admin.site.urls)),
 
 ]

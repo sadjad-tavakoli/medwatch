@@ -1,5 +1,7 @@
 from abc import ABCMeta, abstractmethod
 
+from django.contrib.auth.models import User
+
 from member.models import DoctorMember, Agent
 
 
@@ -69,9 +71,10 @@ class MemberMiddleware(object):
             request.access_level = DoctorAccessLevel(doctor=doctor_member)
             return
 
-        agent = Agent.objects.filter(user=request.user).first()
+        agent = Agent.objects.filter(member__primary_user=request.user).first()
         if agent is not None:
             request.access_level = AgentAccessLevel(agent=agent)
             return
 
-        request.access_level = MemberAccessLevel(member=request.user.member)
+        if hasattr(request.user, 'member'):
+            request.access_level = MemberAccessLevel(member=request.user.member)
