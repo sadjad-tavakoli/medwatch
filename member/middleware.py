@@ -1,4 +1,5 @@
 from abc import ABCMeta, abstractmethod
+
 from member.models import DoctorMember, Agent
 
 
@@ -69,4 +70,6 @@ class MemberMiddleware(object):
         if agent is not None:
             request.access_level = AgentAccessLevel(agent=agent)
             return
-        request.access_level = MemberAccessLevel(member=request.user)
+
+        if hasattr(request.user, 'member'):
+            request.access_level = MemberAccessLevel(member=request.user.member)

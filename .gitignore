@@ -1,7 +1,7 @@
 # Created by .ignore support plugin (hsz.mobi)
 .idea/**
 **.pyc
-__pycache__/**
+/__pycache__/**
 db.sqlite3
 */migrations/**
 med_watch/__pycache__/

@@ -2,13 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c5ede772-319a-4ba5-8ea9-c3b4d6cfbeda" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/med_watch/base_htmlfiles/__base_agent.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/med_watch/base_htmlfiles/__base_doctor.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/med_watch/base_htmlfiles/__base_member.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/member/templates/home_agent.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/member/templates/home_doctor.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/member/templates/home_member.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/member/migrations/0001_initial.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/schedule/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/schedule/admin.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/schedule/apps.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/schedule/forms.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/schedule/migrations/0001_initial.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/schedule/migrations/0002_dailyschedule_doctor_schedule.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/schedule/migrations/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/schedule/models.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/schedule/templates/schedule.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/schedule/tests.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/schedule/urls.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/schedule/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/med_watch/settings.py" afterPath="$PROJECT_DIR$/med_watch/settings.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/med_watch/urls.py" afterPath="$PROJECT_DIR$/med_watch/urls.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/member/middleware.py" afterPath="$PROJECT_DIR$/member/middleware.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/requirements.txt" afterPath="$PROJECT_DIR$/requirements.txt" />
     </list>
     <ignored path="med_watch.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -34,7 +46,7 @@
         <entry file="file://$PROJECT_DIR$/med_watch/settings.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="118" column="27" selection-start-line="118" selection-start-column="27" selection-end-line="118" selection-end-column="27" />
+              <caret line="119" column="27" selection-start-line="119" selection-start-column="27" selection-end-line="119" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -56,8 +68,11 @@
         <entry file="file://$PROJECT_DIR$/med_watch/urls.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="23" column="25" selection-start-line="23" selection-start-column="25" selection-end-line="23" selection-end-column="25" />
-              <folding />
+              <caret line="21" column="25" selection-start-line="21" selection-start-column="25" selection-end-line="21" selection-end-column="25" />
+              <folding>
+                <marker date="1484830501144" expanded="true" signature="0:642" placeholder="&quot;&quot;&quot;med_watch URL Configuration...&quot;&quot;&quot;" />
+                <marker date="1484830501144" expanded="false" signature="643:767" placeholder="import ..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -128,8 +143,10 @@
         <entry file="file://$PROJECT_DIR$/member/middleware.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="71" column="68" selection-start-line="71" selection-start-column="68" selection-end-line="71" selection-end-column="68" />
-              <folding />
+              <caret line="74" column="52" selection-start-line="74" selection-start-column="52" selection-end-line="74" selection-end-column="52" />
+              <folding>
+                <marker date="1484830559340" expanded="false" signature="0:40" placeholder="import ..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -1017,14 +1034,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/member/migrations/0003_auto_20170119_0849.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="16" column="18" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/member/forms/join_forms.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1126,7 +1135,7 @@
     <entry file="file://$PROJECT_DIR$/med_watch/settings.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="118" column="27" selection-start-line="118" selection-start-column="27" selection-end-line="118" selection-end-column="27" />
+          <caret line="119" column="27" selection-start-line="119" selection-start-column="27" selection-end-line="119" selection-end-column="27" />
           <folding />
         </state>
       </provider>
@@ -1152,16 +1161,21 @@
     <entry file="file://$PROJECT_DIR$/member/middleware.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="71" column="68" selection-start-line="71" selection-start-column="68" selection-end-line="71" selection-end-column="68" />
-          <folding />
+          <caret line="74" column="52" selection-start-line="74" selection-start-column="52" selection-end-line="74" selection-end-column="52" />
+          <folding>
+            <marker date="1484830559340" expanded="false" signature="0:40" placeholder="import ..." />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/med_watch/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="23" column="25" selection-start-line="23" selection-start-column="25" selection-end-line="23" selection-end-column="25" />
-          <folding />
+          <caret line="21" column="25" selection-start-line="21" selection-start-column="25" selection-end-line="21" selection-end-column="25" />
+          <folding>
+            <marker date="1484830501144" expanded="true" signature="0:642" placeholder="&quot;&quot;&quot;med_watch URL Configuration...&quot;&quot;&quot;" />
+            <marker date="1484830501144" expanded="false" signature="643:767" placeholder="import ..." />
+          </folding>
         </state>
       </provider>
     </entry>
