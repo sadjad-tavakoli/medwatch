@@ -49,8 +49,7 @@ class EditProfileForm(ModelForm):
         model = Member
         fields = (
             'username', 'email', 'old_password', 'password', 'confirm_password', 'first_name',
-            'last_name',
-            'birth_date', 'profile_picture')
+            'last_name', 'profile_picture')
 
     def clean(self):
         data = self.cleaned_data

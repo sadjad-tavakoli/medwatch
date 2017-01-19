@@ -2,11 +2,10 @@
 .idea/**
 **.pyc
 __pycache__/**
-
+db.sqlite3
 */migrations/**
-templates/
 med_watch/__pycache__/
 member/__pycache__/
 member/forms/__pycache__/
 member/views/__pycache__/
-
+media/*

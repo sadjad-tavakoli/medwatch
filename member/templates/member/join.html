@@ -4,7 +4,7 @@
     <title>Join</title>
 </head>
 <body>
-<form id="signup-form" action="" method="post" novalidate autocomplete="off">
+<form id="signup-form" enctype="multipart/form-data" action="" method="post" novalidate autocomplete="off">
     {% csrf_token %}
     <div>
         {% for field in form %}

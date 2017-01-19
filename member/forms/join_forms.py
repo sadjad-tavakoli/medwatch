@@ -92,9 +92,9 @@ class JoinForm(forms.ModelForm):
     def clean_email(self):
         email = self.cleaned_data['email']
         try:
-            AbstractMember.objects.get(primary_user__email=email)
+            Member.objects.get(primary_user__email=email)
             raise forms.ValidationError('Your email address already exists')
-        except AbstractMember.DoesNotExist:
+        except Member.DoesNotExist:
             return email
 
     def clean(self):
@@ -112,9 +112,12 @@ class JoinForm(forms.ModelForm):
                 'Username should be at least 6 characters long.'
             )
         try:
-            AbstractMember.objects.get(primary_user__username=username)
+            DoctorMember.objects.get(primary_user__username=username)
+            Member.objects.get(primary_user__username=username)
             raise forms.ValidationError('Your username already exists')
-        except AbstractMember.DoesNotExist:
+        except DoctorMember.DoesNotExist:
+            pass
+        except Member.DoesNotExist:
             pass
         return username
 
@@ -146,9 +149,9 @@ class DoctorJoinForm(forms.ModelForm):
     def clean_email(self):
         email = self.cleaned_data['email']
         try:
-            AbstractMember.objects.get(primary_user__email=email)
+            DoctorMember.objects.get(primary_user__email=email)
             raise forms.ValidationError('Your email address already exists')
-        except AbstractMember.DoesNotExist:
+        except DoctorMember.DoesNotExist:
             return email
 
     def clean(self):
@@ -166,9 +169,10 @@ class DoctorJoinForm(forms.ModelForm):
                 'Username should be at least 6 characters long.'
             )
         try:
-            AbstractMember.objects.get(primary_user__username=username)
+            DoctorMember.objects.get(primary_user__username=username)
+            Member.objects.get(primary_user__username=username)
             raise forms.ValidationError('Your username already exists')
-        except AbstractMember.DoesNotExist:
+        except AbstractMember.DoesNotExist or Member.DoesNotExist:
             pass
         return username
 
