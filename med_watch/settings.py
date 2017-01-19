@@ -117,3 +117,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 HOME_REDIRECT_URL = '/home'
+
+DEGREECHOICES = (
+    ('g', 'general practitioner'),
+    ('s', 'specialist'),
+    ('e', 'expert')
+)

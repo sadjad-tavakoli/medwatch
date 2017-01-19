@@ -62,20 +62,23 @@ class DoctorMemberManager(models.Manager):
 
 class DoctorMember(AbstractMember):
     primary_user = models.OneToOneField(User, related_name='doctor_member')
-    degree = models.CharField(max_length=40, null=False, default='general practitioner')
+    degree = models.CharField(choices='DEGREECHOICES', max_length=40, null=False, default='g')
     university = models.CharField(max_length=50, null=False, blank=True)
     graduate_year = models.IntegerField(default=1360)
+    objects = DoctorMemberManager()
 
     def __str__(self):
         return '{} - {} - {} - {}'.format(self.primary_user, self.degree, self.university,
                                           self.graduate_year)
 
+
 #
-# DEGREECHOICES = (
-#     ('g', 'general practitioner'),
-#     ('s', 'specialist'),
-#     ('e', 'expert')
-# )
+DEGREECHOICES = (
+    ('g', 'general practitioner'),
+    ('s', 'specialist'),
+    ('e', 'expert')
+)
+
 
 class MemberManager(models.Manager):
     @staticmethod
