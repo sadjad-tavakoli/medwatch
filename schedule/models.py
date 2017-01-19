@@ -1,4 +1,4 @@
-from datetime import time
+from datetime import datetime, time
 
 from django.db import models
 
@@ -15,6 +15,11 @@ class DoctorSchedule(models.Model):
         if self.weekly_schedule_cache is None:
             self.weekly_schedule_cache = self.dailyschedule_set.order_by('day_of_week')
         return self.weekly_schedule_cache
+
+    def get_daily_schedule(self, day):
+        day_of_week = (day.weekday() + 2) % 7  # datetime starts week with monday
+        weekly_schedule = self.get_weekly_schedule()
+        return weekly_schedule[day_of_week]
 
     def get_session_interval(self):
         return self.session_interval
@@ -52,8 +57,13 @@ class AppointmentRequest(models.Model):
     patient = models.ForeignKey('member.Member', null=False)
     doctor = models.ForeignKey('member.DoctorMember', null=False)
     start_time = models.TimeField()
-    end_time = models.TimeField()
+    date = models.DateField()
     state = models.CharField(choices=APPOINTMENT_STATES, default=APS_REQUESTED, max_length=1)
+    created = models.DateTimeField(default=datetime.now())
+
+    def accept(self):
+        self.state = APS_ACCEPTED
+        self.save()
 
 
 class AppointmentManager(models.Manager):

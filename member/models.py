@@ -30,6 +30,9 @@ class AbstractMember(PolymorphicModel):
         except(TypeError, User.DoesNotExist, User.MultipleObjectsReturned):
             return None, None
 
+    def get_name(self):
+        return '{} {}'.format(self.first_name, self.last_name)
+
 
 class DoctorMemberManager(models.Manager):
     @staticmethod
