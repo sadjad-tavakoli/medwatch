@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'polymorphic',
     'member',
+    'schedule',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -55,7 +56,7 @@ ROOT_URLCONF = 'med_watch.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
+        'DIRS': [os.path.join(BASE_DIR, 'med_watch', 'base_htmlfiles')]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -116,5 +117,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
-
 HOME_REDIRECT_URL = '/home'
+MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+DEGREECHOICES = (
+    ('g', 'general practitioner'),
+    ('s', 'specialist'),
+    ('e', 'expert')
+)

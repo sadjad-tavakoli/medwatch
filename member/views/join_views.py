@@ -1,10 +1,10 @@
+from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView
-
 from member import models
-from member.forms.join_forms import JoinForm, DrJoinForm
-from member.models import Member
+from member.forms.join_forms import JoinForm, DrJoinForm, DoctorJoinForm
+from member.models import Member, DoctorMember
 
 
 class JoinView(CreateView):
@@ -12,11 +12,18 @@ class JoinView(CreateView):
     model = Member
     form_class = JoinForm
 
+    def get_success_url(self):
+        return reverse('home')
 
-# class DrJoinView(CreateView):
-#     template_name = 'doctor/dr_join.html'
-#     model = DoctorMember
-#     form_class = DrJoinForm
+
+class DoctorJoinView(CreateView):
+    template_name = 'member/join.html'
+    model = DoctorMember
+    form_class = DoctorJoinForm
+
+    def get_success_url(self):
+        return reverse('home')
+
 
 def DrJoinView(request):
     if request.method == 'POST':
@@ -40,11 +47,10 @@ def DrJoinView(request):
             user.email = email
             user.save()
             # login(request, new_user)
-            print('before doctor created')
-            doctor = models.DoctorMember.objects.create(primary_user=user, national_id=national_id, degree=degree,
+            doctor = models.DoctorMember.objects.create(primary_user=user, national_id=national_id,
+                                                        degree=degree,
                                                         university=university,
                                                         graduate_year=graduate_year)
-            print('doctor created')
             doctor.first_name = firstName
             doctor.last_name = lastName
             doctor.save()

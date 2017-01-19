@@ -1,10 +1,7 @@
 from django.views.generic.list import ListView
 
-from member.models import Agent, DoctorMember
-
 
 class AgentsListView(ListView):
-
     template_name = 'member/agents_list.html'
 
     def __init__(self, *args, **kwargs):

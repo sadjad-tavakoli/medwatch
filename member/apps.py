@@ -11,7 +11,6 @@ def create_admin(**kwargs):
         auth_models.User.objects.get(username=USERNAME)
     except auth_models.User.DoesNotExist:
         auth_models.User.objects.create_superuser(USERNAME, 'test@mail.com', PASSWORD)
-    print(auth_models.User.objects.all())
 
 
 class MemberAppConfig(AppConfig):

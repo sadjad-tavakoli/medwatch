@@ -5,13 +5,12 @@ from django.core.exceptions import ValidationError
 from django.forms import ModelForm, fields_for_model
 from django.forms.widgets import PasswordInput
 from django.utils.translation import ugettext_lazy as _
-
 from member.models import Member, DoctorMember
 
 
 class EditProfileForm(ModelForm):
     username = forms.CharField(
-        widget=forms.TextInput(attrs={'readonly': 'readonly'}),
+        widget=forms.TextInput(attrs={'readonly': ' readonly'}),
         max_length=fields_for_model(User)['username'].max_length,
         label=_('Username')
     )
@@ -49,8 +48,7 @@ class EditProfileForm(ModelForm):
         model = Member
         fields = (
             'username', 'email', 'old_password', 'password', 'confirm_password', 'first_name',
-            'last_name',
-            'birth_date', 'profile_picture')
+            'last_name', 'profile_picture')
 
     def clean(self):
         data = self.cleaned_data
@@ -72,19 +70,10 @@ class EditProfileForm(ModelForm):
                         _('Password does not match the confirmed password'))
 
 
-class DrEditProfileForm(forms.ModelForm):
+class DrEditProfileForm(EditProfileForm):
     class Meta:
         model = DoctorMember
-        fields = ['first_name', 'last_name', 'degree', 'university', 'graduate_year']
-
-    def clean_first_name(self):
-        data = self.cleaned_data.get('first_name', '')
-        if len(data) == 0:
-            raise forms.ValidationError("Your first name can't be empty.")
-        return data
-
-    def clean_last_name(self):
-        data = self.cleaned_data.get('last_name', '')
-        if len(data) == 0:
-            raise forms.ValidationError("Your last name can't be empty.")
-        return data
+        fields = ['username', 'email', 'old_password', 'password', 'confirm_password',
+                  'first_name',
+                  'last_name', 'profile_picture', 'degree',
+                  'university', 'graduate_year']

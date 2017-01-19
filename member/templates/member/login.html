@@ -1,37 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
-<form id="signin-form" method="post" novalidate autocomplete="off">
-    {% csrf_token %}
-    {% for error in form.non_field_errors %}
-        <p class="error-message"> {{ error }}</p>
-    {% endfor %}
-    <div class="field-box">
-        <label> Username or Email</label>
-        {{ form.username }}
-        {% if form.username.errors %}
-            {% for error in form.username.errors %}
-                {{ error }}
-            {% endfor %}
-        {% endif %}
+{% extends '__base.html' %}
+{% block title %} Login {% endblock %}
+
+{% block content %}
+
+    <div class="column">
+        <h2 class="ui teal image header">
+            <img src="assets/images/logo.png" class="image">
+
+            <div class="content">
+                Log-in to your account
+            </div>
+        </h2>
+        <form class="ui large form" method="post">
+            {% csrf_token %}
+
+            <div class="ui stacked segment">
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        {{ form.username }}
+                    </div>
+                    {% if form.username.errors %}
+                        {% for error in form.username.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="lock icon"></i>
+                        {{ form.password }}
+                    </div>
+                    {% if form.password.errors %}
+                        {% for error in form.password.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <input type="submit" class="ui fluid large teal submit button">
+            </div>
+
+            <div class="ui error message"></div>
+
+        </form>
+
+        <div class="ui message">
+            New to us? <a href="../join/">Sign Up</a>
+            , <a href="../dr-join">Dr Sign Up</a>
+        </div>
     </div>
-    <div class="field-box">
-        <label> Password</label>
-        {{ form.password }}
-        {% if form.password.errors %}
-            {% for error in form.password.errors %}
-                {{ error }}
-            {% endfor %}
-        {% endif %}
-    </div>
-    <div id="sign-in-submit">
-        <input type="submit" value=" Sign In "
-               class="login-submit button">
-    </div>
-</form>
-</body>
-</html>
+
+{% endblock %}
