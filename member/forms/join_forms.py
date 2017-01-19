@@ -10,69 +10,6 @@ username_regex = RegexValidator(regex=r'^[-a-z0-9_]+\Z',
                                         'letters and dashes.')
 
 
-class DrJoinForm(forms.Form):
-    firstName = forms.CharField(max_length=100, required=True,
-                                widget=forms.TextInput(
-                                    attrs={'class': 'input-field', 'placeholder': 'نام'}))
-    lastName = forms.CharField(max_length=100, required=True,
-                               widget=forms.TextInput(
-                                   attrs={'class': 'input-field', 'placeholder': 'نام خانوادگی'}))
-    national_id = forms.IntegerField(max_value=9999999999, required=True,
-                                     widget=forms.TextInput(
-                                         attrs={'class': 'input-field', 'placeholder': 'کد ملی'}))
-
-    username = forms.CharField(max_length=100, required=True,
-                               widget=forms.TextInput(
-                                   attrs={'class': 'input-field', 'placeholder': 'نام کاربری'}))
-    password = forms.CharField(
-        widget=forms.PasswordInput(attrs={'placeholder': 'رمز عبور', 'class': 'input-field'}),
-        required=True)
-    passwordRepeat = forms.CharField(
-        widget=forms.PasswordInput(
-            attrs={'placeholder': 'تکرار رمز عبور', 'class': 'input-field'}), required=True)
-    email = forms.EmailField(
-        widget=forms.TextInput(attrs={'class': 'input-field', 'placeholder': 'پست الکترونیک'}))
-    degree = forms.CharField(max_length=100, required=True,
-                             widget=forms.TextInput(
-                                 attrs={'class': 'input-field', 'placeholder': 'مدرک تحصیلی'}))
-    university = forms.CharField(max_length=100, required=True,
-                                 widget=forms.TextInput(
-                                     attrs={'class': 'input-field',
-                                            'placeholder': 'دانشگاه فارغ التحصیلی'}))
-    graduate_year = forms.IntegerField(required=True,
-                                       widget=forms.TextInput(
-                                           attrs={'class': 'input-field',
-                                                  'placeholder': 'سال اخذ مدرک'}))
-
-    def clean(self):
-        cleaned = super(DrJoinForm, self).clean()
-        password = cleaned.get('password')
-        passwordRepeat = cleaned.get('passwordRepeat')
-        email = cleaned.get('email')
-        username = cleaned.get('username')
-        firstName = cleaned.get('firstName')
-        lastName = cleaned.get('lastName')
-        user = models.User(username=username)
-        try:
-            user = DoctorMember.objects.get(primary_user=user)
-            self.errors['username'] = 'نام کاربری تکراری است'
-            return
-        except DoctorMember.DoesNotExist:
-            if password != passwordRepeat:
-                self.errors['passwordRepeat'] = 'رمز عبور همخوانی ندارد'
-                return
-            if email is None:
-                self.errors['email'] = 'پست الکترونیکی اشتباه است'
-                return
-            if firstName is None:
-                self.errors['firstName'] = 'نام خود را وارد کنید'
-                return
-            if lastName is None:
-                self.errors['lastName'] = 'نام خود را وارد کنید'
-                return
-        return
-
-
 class JoinForm(forms.ModelForm):
     username = fields_for_model(User)['username']
     email = fields_for_model(User)['email']
@@ -112,6 +49,7 @@ class JoinForm(forms.ModelForm):
                 'Username should be at least 6 characters long.'
             )
         try:
+            # TODO bug bug bug bug bug bug bug bug @sadjad
             DoctorMember.objects.get(primary_user__username=username)
             Member.objects.get(primary_user__username=username)
             raise forms.ValidationError('Your username already exists')
@@ -183,6 +121,8 @@ class DoctorJoinForm(forms.ModelForm):
                                              degree=data['degree'],
                                              university=data['university'],
                                              graduate_year=data['graduate_year'],
+                                             profile_picture=data['profile_picture'],
+                                             # contraction=data['contraction'],
                                              national_id=data['national_id'],
                                              email=data['email'])
         return member

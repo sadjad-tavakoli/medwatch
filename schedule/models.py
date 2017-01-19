@@ -37,8 +37,36 @@ class DailySchedule(models.Model):
     end_time = models.TimeField(default=time(hour=17))
 
 
+APS_REQUESTED = 'N'  # New
+APS_ACCEPTED = 'A'
+APS_REJECTED = 'R'
+
+
 class AppointmentRequest(models.Model):
+    APPOINTMENT_STATES = (
+        (APS_REQUESTED, 'Requested'),
+        (APS_ACCEPTED, 'Accepted'),
+        (APS_REJECTED, 'Rejected'),
+    )
+
     patient = models.ForeignKey('member.Member', null=False)
     doctor = models.ForeignKey('member.DoctorMember', null=False)
     start_time = models.TimeField()
     end_time = models.TimeField()
+    state = models.CharField(choices=APPOINTMENT_STATES, default=APS_REQUESTED, max_length=1)
+
+
+class AppointmentManager(models.Manager):
+    def get_queryset(self):
+        return super(AppointmentManager, self).get_queryset().filter(state=APS_ACCEPTED)
+
+    def create(self, **kwargs):
+        kwargs['state'] = APS_ACCEPTED
+        return super(AppointmentManager, self).create(**kwargs)
+
+
+class Appointment(AppointmentRequest):
+    objects = AppointmentManager()
+
+    class Meta:
+        proxy = True

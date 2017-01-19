@@ -21,7 +21,7 @@ from member.views.profile_views import HomeView
 urlpatterns = [
     url(r'', include('member.urls', namespace='members')),
     url(r'', include('schedule.urls', namespace='schedule')),
-    url(r'^home/$', HomeView.as_view(), name='home'),
+    url(r'^$', HomeView.as_view(), name='home'),
     url(r'^admin/', include(admin.site.urls)),
 
 ]

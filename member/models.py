@@ -40,7 +40,9 @@ class DoctorMemberManager(models.Manager):
 
     @staticmethod
     def create(username=None, national_id=None, password=None, email=None, primary_user=None,
-               university=None, graduate_year=None, degree=None, first_name=None,
+               university=None, graduate_year=None, degree=None, profile_picture=None,
+               # contraction=None,
+               first_name=None,
                last_name=None):
         if primary_user is not None:
             username = primary_user.get('username', username)
@@ -56,7 +58,10 @@ class DoctorMemberManager(models.Manager):
                                                                    university=university,
                                                                    graduate_year=graduate_year,
                                                                    last_name=last_name,
-                                                                   national_id=national_id)
+                                                                   national_id=national_id,
+                                                                   profile_picture = profile_picture,
+                                                                   # contraction = contraction
+                                                                   )
 
         return member
 
@@ -66,7 +71,7 @@ class DoctorMember(AbstractMember):
     degree = models.CharField(choices=DEGREECHOICES, max_length=40, null=False, default='g')
     university = models.CharField(max_length=50, null=False, blank=True)
     graduate_year = models.IntegerField(default=1360)
-    contraction = models.FileField(upload_to='contractions/', blank=False, null=False)
+    # contraction = models.FileField(upload_to='contractions/', blank=False, null=False)
     objects = DoctorMemberManager()
 
     def __str__(self):
@@ -83,8 +88,7 @@ class MemberManager(models.Manager):
 
     @staticmethod
     def create(username=None, national_id=None, password=None, email=None, primary_user=None,
-               profile_picture=None,
-               first_name=None, last_name=None):
+               profile_picture=None, first_name=None, last_name=None):
         if primary_user is not None:
             username = primary_user.get('username', username)
             password = primary_user.get('password', password)
