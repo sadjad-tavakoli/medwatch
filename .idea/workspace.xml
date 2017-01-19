@@ -2,15 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c5ede772-319a-4ba5-8ea9-c3b4d6cfbeda" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/med_watch/base_htmlfiles/__base_agent.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/med_watch/base_htmlfiles/__base_doctor.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/med_watch/base_htmlfiles/__base_member.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/member/templates/home_agent.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/member/templates/home_doctor.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/member/templates/home_member.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/med_watch/urls.py" afterPath="$PROJECT_DIR$/med_watch/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/member/middleware.py" afterPath="$PROJECT_DIR$/member/middleware.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/member/models.py" afterPath="$PROJECT_DIR$/member/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/member/templates/member/login.html" afterPath="$PROJECT_DIR$/member/templates/member/login.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/member/views/join_views.py" afterPath="$PROJECT_DIR$/member/views/join_views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/member/views/login_views.py" afterPath="$PROJECT_DIR$/member/views/login_views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/member/views/profile_views.py" afterPath="$PROJECT_DIR$/member/views/profile_views.py" />
     </list>
     <ignored path="med_watch.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -738,7 +736,13 @@
       <option name="project" value="LOCAL" />
       <updated>1484827419937</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="joda kardan sfeHat bar asas noe karbar, &#10;navbar and semantic&#10;base htmls &#10;authentications in some views&#10;">
+      <created>1484830249899</created>
+      <option name="number" value="00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1484830249899</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -805,7 +809,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="join and login&#10;" />
     <MESSAGE value="edit profile" />
-    <option name="LAST_COMMIT_MESSAGE" value="edit profile" />
+    <MESSAGE value="joda kardan sfeHat bar asas noe karbar, &#10;navbar and semantic&#10;base htmls &#10;authentications in some views&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="joda kardan sfeHat bar asas noe karbar, &#10;navbar and semantic&#10;base htmls &#10;authentications in some views&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
