@@ -3,7 +3,6 @@
 **.pyc
 /__pycache__/**
 db.sqlite3
-*/migrations/**
 med_watch/__pycache__/
 member/__pycache__/
 member/forms/__pycache__/

@@ -53,7 +53,7 @@ class AppointmentRequest(models.Model):
     doctor = models.ForeignKey('member.DoctorMember', null=False)
     start_time = models.TimeField()
     end_time = models.TimeField()
-    state = models.CharField(choices=APPOINTMENT_STATES, default=APS_REQUESTED)
+    state = models.CharField(choices=APPOINTMENT_STATES, default=APS_REQUESTED, max_length=1)
 
 
 class AppointmentManager(models.Manager):
