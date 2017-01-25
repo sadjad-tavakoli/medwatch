@@ -61,9 +61,15 @@ class AppointmentRequest(models.Model):
     state = models.CharField(choices=APPOINTMENT_STATES, default=APS_REQUESTED, max_length=1)
     created = models.DateTimeField(default=datetime.now())
 
-    def accept(self):
-        self.state = APS_ACCEPTED
+    def resolve(self, action):
+        if action == 'accept':
+            self.state = APS_ACCEPTED
+            message = 'Appointment Accepted'
+        else:
+            self.state = APS_REJECTED
+            message = 'Appointment Rejected'
         self.save()
+        return message
 
 
 class AppointmentManager(models.Manager):

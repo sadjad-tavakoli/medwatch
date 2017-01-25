@@ -57,6 +57,7 @@ class AppointmentRequestsView(TemplateView):
 class AppointmentRequestResolvingView(View):
     def post(self, request, *args, **kwargs):
         request_id = request.POST.get('request_id')
+        action = request.POST.get('action', 'accept')
         appointment_request = AppointmentRequest.objects.get(id=request_id)
 
         doctor = self.request.access_level.doctor
@@ -72,12 +73,13 @@ class AppointmentRequestResolvingView(View):
 
         if appointment_request.state != APS_REQUESTED or appointment_request.doctor != doctor:
             message = "Operation not permitted!"
-        elif overlapping_appointments.exists() or appointment_request.start_time > daily_schedule.end_time - timedelta(
-                minutes=session_interval) or appointment_request.start_time < daily_schedule.start_time:
+        elif action == 'accept' and (
+                        overlapping_appointments.exists() or
+                            appointment_request.start_time > daily_schedule.end_time - timedelta(
+                            minutes=session_interval) or appointment_request.start_time < daily_schedule.start_time):
             message = "Appointment doesn't fit in schedule!"
         else:
-            appointment_request.accept()
-            message = "Appointment accepted!"
+            message = appointment_request.resolve(action)
 
         return HttpResponseRedirect(
             "{}?message={}".format(reverse('schedule:requests'), message))
