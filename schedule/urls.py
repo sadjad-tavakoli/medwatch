@@ -1,4 +1,4 @@
-from django.conf.urls import url, include
+from django.conf.urls import url
 
 from schedule.views.doctor import ScheduleView, AppointmentRequestsView
 
