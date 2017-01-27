@@ -1,11 +1,8 @@
-from django.contrib.gis.geos.mutable_list import ListMixin
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django.views.generic.base import View
 from django.views.generic.edit import UpdateView
 from django.views.generic.list import ListView
-
-from member.forms.profile_forms import EditProfileForm
 from schedule.forms import EditAppointmentForm
 from schedule.models import Appointment
 

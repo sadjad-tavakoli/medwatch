@@ -1,6 +1,24 @@
 {% extends '__base_member.html' %}
 {% block body %}
+    <div class="ui middle aligned divided list ">
+        <div class="item">
+            <a class="ui tiny image">
+                <img src="{{ object.doctor.image_url }}">
+            </a>
+
+            <div class="content">
+                <a class="header">{{ object.doctor.get_name }}</a>
+
+                <div class="description">
+                    <p>{{ object.date }}-{{ object.id }}-{{ object.doctor.address }}address.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
     <form class="ui form">
+
         <div class="field">
             <label>Doctor</label>
             {{ form.doctor }}
