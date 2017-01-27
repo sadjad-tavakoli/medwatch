@@ -1,0 +1,19 @@
+{% extends '__base_member.html' %}
+{% block body %}
+    <form class="ui form">
+        <div class="field">
+            <label>Doctor</label>
+            {{ form.doctor }}
+        </div>
+        <div class="field">
+            <label>Date</label>
+            {{ form.date }}
+        </div>
+        <button type="submit" class="ui primary button">
+            Save
+        </button>
+        <a href="{% url 'members:patient:appointment-list' %}" class="ui button">
+            Discard
+        </a>
+    </form>
+{% endblock %}

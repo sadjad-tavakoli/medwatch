@@ -1,6 +1,6 @@
 from datetime import datetime, time
-
 from django.db import models
+from django_fsm import FSMField
 
 
 class DoctorSchedule(models.Model):
@@ -45,6 +45,7 @@ class DailySchedule(models.Model):
 APS_REQUESTED = 'N'  # New
 APS_ACCEPTED = 'A'
 APS_REJECTED = 'R'
+APS_CANCELED = 'C'
 
 
 class AppointmentRequest(models.Model):
@@ -52,6 +53,7 @@ class AppointmentRequest(models.Model):
         (APS_REQUESTED, 'Requested'),
         (APS_ACCEPTED, 'Accepted'),
         (APS_REJECTED, 'Rejected'),
+        (APS_CANCELED, 'Canceled'),
     )
 
     patient = models.ForeignKey('member.Member', null=False)
@@ -61,6 +63,9 @@ class AppointmentRequest(models.Model):
     state = models.CharField(choices=APPOINTMENT_STATES, default=APS_REQUESTED, max_length=1)
     created = models.DateTimeField(default=datetime.now())
 
+    # state = FSMField(protected=True, default=STATE_NEW)
+    # should use fsm ******* @MohammadReza
+
     def resolve(self, action):
         if action == 'accept':
             self.state = APS_ACCEPTED
@@ -68,6 +73,13 @@ class AppointmentRequest(models.Model):
         else:
             self.state = APS_REJECTED
             message = 'Appointment Rejected'
+        self.save()
+        return message
+
+    # should use fsm ******* @MohammadReza
+    def cancel(self):
+        self.state = APS_CANCELED
+        message = 'Appointment Canceled'
         self.save()
         return message
 

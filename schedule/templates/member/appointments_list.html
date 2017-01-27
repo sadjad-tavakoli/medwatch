@@ -10,21 +10,25 @@
                 </a>
 
                 <div class="content">
-                    <a class="header">Jenny Hess</a>
+                    <a class="header">{{ object.doctor.get_name }}</a>
 
                     <div class="description">
-                        <p>Jenny is a student studying Media Management at <a>the New School</a>.
+                        <p>{{ object.date }}-{{ object.id }}-{{ object.doctor.address }}address.
                         </p>
                     </div>
-                    <div class="extra">
-                        <div class="ui right floated button">
-                            Action
-                        </div>
-                    </div>
+
+                </div>
+                <div class="extra">
+                    <a href="{% url 'members:patient:edit-appointment' appointment_id=object.id %}" class="ui right floated button">
+                        Edit
+                    </a>
+                    <a href="{% url 'members:patient:cancel-appointment' appointment_id=object.id %}" class="ui right floated button red">
+                        Cancel
+                    </a>
                 </div>
             </div>
         {% empty %}
-
+            no item
         {% endfor %}
     </div>
 {% endblock %}

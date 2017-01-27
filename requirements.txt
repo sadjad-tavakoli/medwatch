@@ -9,3 +9,4 @@ virtualenvwrapper==4.7.2
 WebTest==2.0.23
 django-extra-views==0.8
 Pillow
+djangorestframework==3.4.6
