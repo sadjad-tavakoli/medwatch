@@ -1,6 +1,5 @@
 from datetime import datetime, time
 from django.db import models
-from django_fsm import FSMField
 
 
 class DoctorSchedule(models.Model):
