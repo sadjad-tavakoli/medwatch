@@ -15,11 +15,16 @@
     {% endblock %}
 </head>
 <body>
-{% block body %}
-    <div class="ui middle aligned center aligned grid">
-        {% block content %}
+<div class="ui attached menu">
+    {% block navbar-item %}
+    {% endblock %}
+</div>
+<div class="ui main text container">
+    <h1 class="ui header"></h1>
+    <div>
+        {% block body %}
         {% endblock %}
     </div>
-{% endblock %}
+</div>
 </body>
 </html>

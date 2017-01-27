@@ -1,13 +1,9 @@
 from django import forms
 from django.contrib.auth.models import User
-from django.core.validators import RegexValidator
 from django.forms.models import fields_for_model
-from member import models
-from member.models import Member, DoctorMember, AbstractMember
 
-username_regex = RegexValidator(regex=r'^[-a-z0-9_]+\Z',
-                                message='Valid characters are numbers, lowercase '
-                                        'letters and dashes.')
+from med_watch.model_mixins import username_regex
+from member.models import Member, DoctorMember, AbstractMember
 
 
 class JoinForm(forms.ModelForm):
