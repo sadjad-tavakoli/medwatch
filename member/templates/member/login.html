@@ -30,11 +30,11 @@
                         <i class="lock icon"></i>
                         {{ form.password }}
                     </div>
-                    {% if form.password.errors %}
-                        {% for error in form.password.errors %}
-                            {{ error }}
-                        {% endfor %}
-                    {% endif %}
+                        {% if form.password.errors %}
+                            {% for error in form.password.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        {% endif %}
                 </div>
                 <input type="submit" class="ui fluid large teal submit button">
             </div>
