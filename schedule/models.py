@@ -1,5 +1,8 @@
 from datetime import datetime, time
+
 from django.db import models
+
+from med_watch.services import mail_service
 
 
 class DoctorSchedule(models.Model):
@@ -23,6 +26,10 @@ class DoctorSchedule(models.Model):
     def get_session_interval(self):
         return self.session_interval
 
+    def get_first_free_time(self):
+        # Todo
+        pass
+
     @staticmethod
     def get_by_doctor(doctor):
         doctor_schedule, created = DoctorSchedule.objects.get_or_create(doctor=doctor)
@@ -45,6 +52,7 @@ APS_REQUESTED = 'N'  # New
 APS_ACCEPTED = 'A'
 APS_REJECTED = 'R'
 APS_CANCELED = 'C'
+APS_POSTPONED = 'P'
 
 
 class AppointmentRequest(models.Model):
@@ -53,6 +61,7 @@ class AppointmentRequest(models.Model):
         (APS_ACCEPTED, 'Accepted'),
         (APS_REJECTED, 'Rejected'),
         (APS_CANCELED, 'Canceled'),
+        (APS_POSTPONED, 'Postponed'),
     )
 
     patient = models.ForeignKey('member.Member', null=False)
@@ -75,7 +84,7 @@ class AppointmentRequest(models.Model):
         self.save()
         return message
 
-    # should use fsm ******* @MohammadReza
+    # Appointment got canceled by user
     def cancel(self):
         self.state = APS_CANCELED
         message = 'Appointment Canceled'
@@ -94,6 +103,32 @@ class AppointmentManager(models.Manager):
 
 class Appointment(AppointmentRequest):
     objects = AppointmentManager()
+
+    # Appointment got canceled by doctor
+    def postpone(self, reschedule=True):
+        assert self.state == APS_ACCEPTED
+        self.state = APS_POSTPONED
+        self.save()
+
+        reschedule_message = ''
+        if reschedule:
+            doctor_schedule = DoctorSchedule.get_by_doctor(self.doctor)
+            first_free_time = doctor_schedule.get_first_free_time()
+            new_appointment = Appointment.objects.create(patient=self.patient,
+                                                         doctor=self.doctor,
+                                                         date=first_free_time.date(),
+                                                         time=first_free_time.time())
+            mail_service.send_mail(template='appointment_reschedule', context={
+                'appointment': self,
+                'new_appointment': new_appointment,
+            })
+            message = 'Appointment Postponed to {}'.format(first_free_time)
+        else:
+            mail_service.send_mail(template='appointment_cancel', context={
+                'appointment': self,
+            })
+            message = 'Appointment Canceled by Doctor'
+        return message
 
     class Meta:
         proxy = True
