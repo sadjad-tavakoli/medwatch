@@ -2,7 +2,7 @@
 {% load static %}
 {% block navbar-item %}
     <div class="item">
-        <img src="{% static request.user.member.image_url %}">
+        <img src="{% static request.access_level.member.image_url %}">
     </div>
     <a href="search-in-doctors" class="item">search doctor</a>
     <a class="item" href="{% url 'members:patient:appointment-list' %}">Appointments</a>

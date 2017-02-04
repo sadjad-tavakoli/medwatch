@@ -1,11 +1,12 @@
 {% extends '__base.html' %}
+{% load static %}
 {% block navbar-item %}
     <div class="item">
-        <img src="/images/logo.png">
+        <img src="{% static request.access_level.agent.image_url %}">
     </div>
     <a class="item" href="{% url 'home' %}">home</a>
     <a class="item" href="{% url 'members:agent:appointment-list' %}">Appointment List</a>
-    <a class="item">Sign-in</a>
+    <a class="item" href="{% url 'members:logout' %}">Log Out</a>
 {% endblock %}
 {% block body %}
     <div class="ui main text container">

@@ -32,7 +32,9 @@ class AbstractMember(PolymorphicModel):
             return None, None
 
     def get_name(self):
-        return '{} {}'.format(self.first_name, self.last_name)
+        if self.first_name is not None or self.last_name is not None:
+            return '{} {}'.format(self.first_name, self.last_name)
+        return self.primary_user.username
 
     @property
     def image_url(self):
@@ -122,3 +124,7 @@ class Member(AbstractMember):
 class Agent(models.Model):
     doctor = models.ForeignKey(DoctorMember, null=False, related_name='agents')
     member = models.OneToOneField(Member, null=False)
+
+    @property
+    def image_url(self):
+        return self.member.image_url

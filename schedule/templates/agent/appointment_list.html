@@ -17,6 +17,7 @@
                     </div>
                 </div>
                 <div class="extra">
+                    start time : {{ object.start_time }}
                     <a href="{% url 'members:agent:edit-appointment' appointment_id=object.id %}"
                        class="ui right floated button">
                         Edit

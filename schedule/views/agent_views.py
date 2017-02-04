@@ -1,4 +1,5 @@
 import datetime
+
 from django.core.urlresolvers import reverse
 from django.views.generic.list import ListView
 
@@ -26,7 +27,7 @@ class AgentEditAppointmentView(AgentPermissionMixin, EditAppointmentView):
         time_delta = datetime.timedelta(days=0, hours=new_time.hour - last_time.hour,
                                         minutes=new_time.minute - last_time.minute,
                                         seconds=new_time.second - last_time.second)
-        for appointment in Appointment.objects.all():
+        for appointment in self.get_object().get_next_appointments():
             appointment.update_start_time(total_seconds=int(time_delta.total_seconds()))
 
         return super(AgentEditAppointmentView, self).form_valid(form)

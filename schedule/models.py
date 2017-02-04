@@ -91,6 +91,14 @@ class AppointmentRequest(models.Model):
         self.save()
         return message
 
+    def get_next_appointments(self):
+        appointment_list = []
+        for appointment_item in Appointment.objects.all():
+            if appointment_item.start_time > self.start_time:
+                appointment_list.append(appointment_item)
+
+        return appointment_list
+
 
 class AppointmentManager(models.Manager):
     def get_queryset(self):
