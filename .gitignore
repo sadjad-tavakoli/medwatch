@@ -9,4 +9,5 @@ member/forms/__pycache__/
 member/views/__pycache__/
 media/*
 member/migrations/*
+schedule/migrations/*
 venv3/*
