@@ -1,14 +1,10 @@
 {% extends '__base.html' %}
-{% block body %}
-    <div class="ui top fixed menu">
-        {% block navbar-item %}
-            <div class="item">
-                <img src="/images/logo.png">
-            </div>
-            <a href="search-in-doctors" class="item">search doctor</a>
-            <a class="item">Testimonials</a>
-            <a href="{% url 'members:logout' %}" class="item">Sign-Out</a>
-        {% endblock %}
+{% load static %}
+{% block navbar-item %}
+    <div class="item">
+        <img src="{% static request.user.member.image_url %}">
     </div>
-    {{ block.super }}
+    <a href="search-in-doctors" class="item">search doctor</a>
+    <a class="item" href="{% url 'members:patient:appointment-list' %}">Appointments</a>
+    <a href="{% url 'members:logout' %}" class="item">Sign-Out</a>
 {% endblock %}

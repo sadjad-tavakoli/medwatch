@@ -1,34 +1,64 @@
-{#{% extends "__base.html" %}#}
-
-
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Join</title>
-</head>
-<body>
-<form id="signup-form" enctype="multipart/form-data" action="" method="post" novalidate autocomplete="off">
-    {% csrf_token %}
+{% extends "__base_no_navbar.html" %}
+{% block body %}
     <div>
-        {% for field in form %}
-            <div>
+        <h5></h5>
 
-                {{ field.label }}
-                {{ field }}
-                {% if field.errors %}
-                    {% for error in field.errors %}
-                        {{ error }}
-                    {% endfor %}
-                {% endif %}
+        <h2 class="ui teal image header">
+            <img src="assets/images/logo.png" class="image">
+
+            <div class="content">
+                join
             </div>
+        </h2>
+        <form class="ui form" enctype="multipart/form-data" action="" method="post" novalidate
+              autocomplete="off">
+            {% csrf_token %}
 
-        {% endfor %}
-        {% for error in form.non_field_errors %}
-            <p class="error-message"> {{ error }}</p>
-        {% endfor %}
+            <div class="ui stacked segment">
+                <div class="two fields">
+                    <div class="field">
+                        <label>First Name</label>
+                        {{ form.first_name }}
+                    </div>
+                    <div class="field">
+                        <label>Last Name</label>
+                        {{ form.last_name }}
+                    </div>
+                    <div class="field">
+                        <label>National Id</label>
+                        {{ form.national_id }}
+                    </div>
+                </div>
+                <div class="two fields">
+                    <div class="field">
+                        <label>Username</label>
+                        {{ form.username }}
+                    </div>
+
+                    <div class="field">
+                        <label>Email</label>
+                        {{ form.email }}
+                    </div>
+                </div>
+                <div class="two fields">
+                    <div class="field">
+                        <label>PassWord</label>
+                        {{ form.password }}
+                    </div>
+                    <div class="field">
+                        <label>RePassword</label>
+                        {{ form.re_password }}
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label>Profile Picture</label>
+                    {{ form.profile_picture }}
+                </div>
+                <input type="submit" class="ui fluid teal submit button" value="Join">
+            </div>
+            <div class="ui error message"></div>
+        </form>
     </div>
-    <input type="submit" value="Sign Up" id="join-submit" class="button">
 
-</form>
-</body>
-</html>
+{% endblock %}

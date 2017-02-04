@@ -17,7 +17,7 @@ class JoinView(CreateView):
 
 
 class DoctorJoinView(CreateView):
-    template_name = 'member/join.html'
+    template_name = 'member/dr_join.html'
     model = DoctorMember
     form_class = DoctorJoinForm
 

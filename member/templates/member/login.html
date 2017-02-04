@@ -1,8 +1,7 @@
-{% extends '__base.html' %}
+{% extends '__base_no_navbar.html' %}
 {% block title %} Login {% endblock %}
 
-{% block content %}
-
+{% block body %}
     <div class="column">
         <h2 class="ui teal image header">
             <img src="assets/images/logo.png" class="image">
@@ -31,11 +30,11 @@
                         <i class="lock icon"></i>
                         {{ form.password }}
                     </div>
-                    {% if form.password.errors %}
-                        {% for error in form.password.errors %}
-                            {{ error }}
-                        {% endfor %}
-                    {% endif %}
+                        {% if form.password.errors %}
+                            {% for error in form.password.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        {% endif %}
                 </div>
                 <input type="submit" class="ui fluid large teal submit button">
             </div>

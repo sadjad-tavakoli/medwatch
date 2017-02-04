@@ -1,0 +1,34 @@
+{% extends '__base_member.html' %}
+{% block body %}
+    {{ block.super }}
+    <div class="ui middle aligned divided list ">
+
+        {% for object in object_list %}
+            <div class="item">
+                <a class="ui tiny image">
+                    <img src="{{ object.doctor.image_url }}">
+                </a>
+
+                <div class="content">
+                    <a class="header">{{ object.doctor.get_name }}</a>
+
+                    <div class="description">
+                        <p>{{ object.date }}-{{ object.id }}-{{ object.doctor.address }}address.
+                        </p>
+                    </div>
+
+                </div>
+                <div class="extra">
+                    <a href="{% url 'members:patient:edit-appointment' appointment_id=object.id %}" class="ui right floated button">
+                        Edit
+                    </a>
+                    <a href="{% url 'members:patient:cancel-appointment' appointment_id=object.id %}" class="ui right floated button red">
+                        Cancel
+                    </a>
+                </div>
+            </div>
+        {% empty %}
+            no item
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -1,6 +1,8 @@
-from datetime import time
+from datetime import datetime, time
 
 from django.db import models
+
+from med_watch.services import mail_service
 
 
 class DoctorSchedule(models.Model):
@@ -16,8 +18,17 @@ class DoctorSchedule(models.Model):
             self.weekly_schedule_cache = self.dailyschedule_set.order_by('day_of_week')
         return self.weekly_schedule_cache
 
+    def get_daily_schedule(self, day):
+        day_of_week = (day.weekday() + 2) % 7  # datetime starts week with monday
+        weekly_schedule = self.get_weekly_schedule()
+        return weekly_schedule[day_of_week]
+
     def get_session_interval(self):
         return self.session_interval
+
+    def get_first_free_time(self):
+        # Todo
+        pass
 
     @staticmethod
     def get_by_doctor(doctor):
@@ -40,6 +51,8 @@ class DailySchedule(models.Model):
 APS_REQUESTED = 'N'  # New
 APS_ACCEPTED = 'A'
 APS_REJECTED = 'R'
+APS_CANCELED = 'C'
+APS_POSTPONED = 'P'
 
 
 class AppointmentRequest(models.Model):
@@ -47,13 +60,36 @@ class AppointmentRequest(models.Model):
         (APS_REQUESTED, 'Requested'),
         (APS_ACCEPTED, 'Accepted'),
         (APS_REJECTED, 'Rejected'),
+        (APS_CANCELED, 'Canceled'),
+        (APS_POSTPONED, 'Postponed'),
     )
 
     patient = models.ForeignKey('member.Member', null=False)
     doctor = models.ForeignKey('member.DoctorMember', null=False)
     start_time = models.TimeField()
-    end_time = models.TimeField()
+    date = models.DateField()
     state = models.CharField(choices=APPOINTMENT_STATES, default=APS_REQUESTED, max_length=1)
+    created = models.DateTimeField(default=datetime.now())
+
+    # state = FSMField(protected=True, default=STATE_NEW)
+    # should use fsm ******* @MohammadReza
+
+    def resolve(self, action):
+        if action == 'accept':
+            self.state = APS_ACCEPTED
+            message = 'Appointment Accepted'
+        else:
+            self.state = APS_REJECTED
+            message = 'Appointment Rejected'
+        self.save()
+        return message
+
+    # Appointment got canceled by user
+    def cancel(self):
+        self.state = APS_CANCELED
+        message = 'Appointment Canceled'
+        self.save()
+        return message
 
 
 class AppointmentManager(models.Manager):
@@ -67,6 +103,32 @@ class AppointmentManager(models.Manager):
 
 class Appointment(AppointmentRequest):
     objects = AppointmentManager()
+
+    # Appointment got canceled by doctor
+    def postpone(self, reschedule=True):
+        assert self.state == APS_ACCEPTED
+        self.state = APS_POSTPONED
+        self.save()
+
+        reschedule_message = ''
+        if reschedule:
+            doctor_schedule = DoctorSchedule.get_by_doctor(self.doctor)
+            first_free_time = doctor_schedule.get_first_free_time()
+            new_appointment = Appointment.objects.create(patient=self.patient,
+                                                         doctor=self.doctor,
+                                                         date=first_free_time.date(),
+                                                         time=first_free_time.time())
+            mail_service.send_mail(template='appointment_reschedule', context={
+                'appointment': self,
+                'new_appointment': new_appointment,
+            })
+            message = 'Appointment Postponed to {}'.format(first_free_time)
+        else:
+            mail_service.send_mail(template='appointment_cancel', context={
+                'appointment': self,
+            })
+            message = 'Appointment Canceled by Doctor'
+        return message
 
     class Meta:
         proxy = True

@@ -3,6 +3,7 @@ from django.db import models
 from django.db.models.fields.files import ImageField
 from polymorphic.models import PolymorphicModel
 
+from med_watch.model_mixins import get_url
 from med_watch.settings import DEGREECHOICES
 
 
@@ -13,7 +14,8 @@ class AbstractMember(PolymorphicModel):
     national_id = models.IntegerField()
 
     def __str__(self):
-        return '{} - {} - {} '.format(self.first_name, self.last_name, self.national_id)
+        return '{} - {} - {} - {} '.format(self.primary_user.username, self.first_name,
+                                           self.last_name, self.national_id)
 
     @staticmethod
     def get_member_by_email_username(email_username):
@@ -29,6 +31,13 @@ class AbstractMember(PolymorphicModel):
                 return user.doctor_member, True
         except(TypeError, User.DoesNotExist, User.MultipleObjectsReturned):
             return None, None
+
+    def get_name(self):
+        return '{} {}'.format(self.first_name, self.last_name)
+
+    @property
+    def image_url(self):
+        return get_url(self.profile_picture, "icons/profile_default.svg")
 
 
 class DoctorMemberManager(models.Manager):
@@ -59,7 +68,7 @@ class DoctorMemberManager(models.Manager):
                                                                    graduate_year=graduate_year,
                                                                    last_name=last_name,
                                                                    national_id=national_id,
-                                                                   profile_picture = profile_picture,
+                                                                   profile_picture=profile_picture,
                                                                    # contraction = contraction
                                                                    )
 

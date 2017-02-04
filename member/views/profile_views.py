@@ -99,9 +99,6 @@ class HomeView(TemplateView):
 
     @staticmethod
     def get_user_template(request):
-        print(request.access_level.is_doctor())
-        print(request.access_level.is_agent())
-        print(request.access_level.is_member())
         if request.access_level.is_doctor():
             return 'home_doctor.html'
         if request.access_level.is_agent():
