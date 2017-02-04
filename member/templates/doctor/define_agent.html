@@ -1,0 +1,47 @@
+{% extends '__base_doctor.html' %}}
+{% load static %}
+{% block body %}
+    {{ block.super }}
+
+
+    <div class="ui horizontal divider">
+        your current agents
+    </div>
+    <div class="ui link three cards">
+        {% for agent in agents %}
+            <div class="card">
+                <div class="content">
+                    <img class="right floated mini ui" src="{% static agent.member.image_url %}">
+                    <div class="header">{{ agent.member.get_name }}</div>
+                    <div class="description">
+                        <div class="content"><a>{{ agent.member.primary_user.username }}</a></div>
+                        {{ agent.member.national_id }}
+                    </div>
+                </div>
+                <div class="ui bottom attached button">
+                    <i class="remove icon"></i>
+                    remove
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="ui horizontal divider">
+        define new agent
+    </div>
+    <div class="ui main container">
+        <form class="ui form" enctype="multipart/form-data" action="" method="post" novalidate
+              autocomplete="off">
+            {% csrf_token %}
+            <div class="two fields ">
+                <div class="field">
+                    {{ form.member }}
+                </div>
+                <div class=" field">
+                    <button type="submit" class="ui teal button"><i
+                            class="plus icon"></i></button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+{% endblock %}
