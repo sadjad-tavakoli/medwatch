@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>search in doctors</title>
+</head>
+<body>
+<div id="search-bar">
+    <form method="post" action="" style="margin: 10px">
+        {% csrf_token %}
+        <input name="name_search" type="text" placeholder="search in doctors' name"
+               style="height: 40px; width: 70%; background-color: azure; margin: 5px;border-radius: 5px"> </input>
+        <input name="address_search" type="text" placeholder="search in address"
+               style="height: 40px; width: 70%; background-color: azure; margin: 5px;border-radius: 5px"> </input>
+{#        <input name="degree_search" type="" value="search"#}
+{#               style="height: 40px; width: 55px; margin: 5px; background-color: cadetblue;border-radius: 5px;cursor: pointer"> </input>#}
+        <input name="search_bottom" type="submit" value="search"
+                           style="height: 40px; width: 55px; margin: 5px; background-color: cadetblue;border-radius: 5px;cursor: pointer"> </input>
+    </form>
+    <div name="search_result" style="overflow: auto;margin: 5px; height: 60px; border: groove; height: 40%">
+        {% for d in result_doctors %}
+            <div>
+                <div> {{ d.first_name }} - {{ d.last_name }}</div>
+            </div>
+        {% endfor %}
+    end
+    </div>
+</div>
+
+</body>
+</html>
