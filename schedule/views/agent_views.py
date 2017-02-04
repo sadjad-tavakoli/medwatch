@@ -1,21 +1,20 @@
 import datetime
-from django.utils import timezone
-
 from django.core.urlresolvers import reverse
 from django.views.generic.list import ListView
 
+from med_watch.permissions import AgentPermissionMixin
 from schedule.models import Appointment
 from schedule.views.member_views import EditAppointmentView
 
 
-class AgentAppointmentsList(ListView):
+class AgentAppointmentsList(AgentPermissionMixin, ListView):
     template_name = 'agent/appointment_list.html'
 
     def get_queryset(self):
         return Appointment.objects.filter(doctor=self.request.access_level.doctor)
 
 
-class AgentEditAppointmentView(EditAppointmentView):
+class AgentEditAppointmentView(AgentPermissionMixin, EditAppointmentView):
     def get_object(self, queryset=None):
         appointment_id = self.kwargs.get('appointment_id', None)
         return Appointment.objects.get(doctor=self.request.access_level.doctor, id=appointment_id)

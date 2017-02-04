@@ -5,11 +5,13 @@ from django.shortcuts import redirect
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView
+
+from med_watch.permissions import DoctorPermissionMixin, AgentPermissionMixin
 from member.forms.profile_forms import EditProfileForm, DrEditProfileForm
 from member.models import Member, DoctorMember
 
 
-class ProfileView(DetailView):
+class ProfileView(AgentPermissionMixin, DetailView):
     template_name = 'member/profile.html'
     context_object_name = 'member'
 
@@ -19,7 +21,7 @@ class ProfileView(DetailView):
         return member
 
 
-class DrEditProfile(SuccessMessageMixin, UpdateView):
+class DrEditProfile(DoctorPermissionMixin, SuccessMessageMixin, UpdateView):
     model = DoctorMember
     template_name = 'doctor/dr_edit_profile.html'
     form_class = DrEditProfileForm
