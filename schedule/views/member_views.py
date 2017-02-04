@@ -30,3 +30,6 @@ class EditAppointmentView(UpdateView):
     def get_object(self, queryset=None):
         appointment_id = self.kwargs.get('appointment_id', None)
         return Appointment.objects.get(patient=self.request.user.member, id=appointment_id)
+
+    def get_success_url(self):
+        return reverse('members:member:appointment-list')

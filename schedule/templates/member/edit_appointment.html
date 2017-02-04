@@ -17,8 +17,8 @@
             </div>
         </div>
     </div>
-    <form class="ui form">
-
+    <form class="ui form" method="post">
+        {% csrf_token %}
         <div class="field">
             <label>Doctor</label>
             {{ form.doctor }}
@@ -27,11 +27,21 @@
             <label>Date</label>
             {{ form.date }}
         </div>
+        {% if request.access_level.is_agent %}
+            <div class="field">
+                <label>Time</label>
+                {{ form.start_time }}
+            </div>
+        {% endif %}
         <button type="submit" class="ui primary button">
             Save
         </button>
-        <a href="{% url 'members:patient:appointment-list' %}" class="ui button">
-            Discard
+        {% if request.access_level.is_agent %}
+            <a href="{% url 'members:agent:appointment-list' %}" class="ui button">
+        {% else %}
+            <a href="{% url 'members:patient:appointment-list' %}" class="ui button">
+        {% endif %}
+        Discard
         </a>
     </form>
 {% endblock %}

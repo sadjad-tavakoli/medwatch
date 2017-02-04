@@ -17,11 +17,11 @@
                     </div>
                 </div>
                 <div class="extra">
-                    <a href="{% url 'members:patient:edit-appointment' appointment_id=object.id %}"
+                    <a href="{% url 'members:agent:edit-appointment' appointment_id=object.id %}"
                        class="ui right floated button">
                         Edit
                     </a>
-                    <a href="{% url 'members:patient:cancel-appointment' appointment_id=object.id %}"
+                    <a href="{% url 'members:agent:cancel-appointment' appointment_id=object.id %}"
                        class="ui right floated button red">
                         Cancel
                     </a>

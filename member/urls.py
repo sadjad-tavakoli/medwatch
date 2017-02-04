@@ -3,7 +3,7 @@ from member.views.agents import DefineAgents, RemoveAgents
 from member.views.join_views import JoinView, DoctorJoinView
 from member.views.login_views import LoginView, LogoutView
 from member.views.profile_views import EditProfileView, ProfileView, DrEditProfile
-from schedule.views.agent_views import AgentAppointmentsList
+from schedule.views.agent_views import AgentAppointmentsList, AgentEditAppointmentView
 from schedule.views.member_views import AppointmentsList, CancelAppointments, EditAppointmentView
 
 profile_url_patterns = [
@@ -23,7 +23,7 @@ agent_url_patterns = [
     url(r'^appointments_list/$', AgentAppointmentsList.as_view(), name='appointment-list'),
     url(r'^cancel_appointment/(?P<appointment_id>\d+)/$', CancelAppointments.as_view(),
         name='cancel-appointment'),
-    url(r'^edit_appointment/(?P<appointment_id>\d+)/$', EditAppointmentView.as_view(),
+    url(r'^edit_appointment/(?P<appointment_id>\d+)/$', AgentEditAppointmentView.as_view(),
         name='edit-appointment'),
 
 ]

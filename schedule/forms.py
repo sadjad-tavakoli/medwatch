@@ -21,7 +21,7 @@ class DoctorScheduleForm(forms.ModelForm):
 class EditAppointmentForm(forms.ModelForm):
     class Meta:
         model = Appointment
-        fields = ('doctor', 'date')
+        fields = ('doctor', 'date', 'start_time')
 
     def __init__(self, *args, **kwargs):
         super(EditAppointmentForm, self).__init__(*args, **kwargs)

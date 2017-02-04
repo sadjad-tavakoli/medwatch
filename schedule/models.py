@@ -1,7 +1,7 @@
-from datetime import datetime, time
+import datetime
 
+from datetime import time
 from django.db import models
-
 from med_watch.services import mail_service
 
 
@@ -69,7 +69,7 @@ class AppointmentRequest(models.Model):
     start_time = models.TimeField()
     date = models.DateField()
     state = models.CharField(choices=APPOINTMENT_STATES, default=APS_REQUESTED, max_length=1)
-    created = models.DateTimeField(default=datetime.now())
+    created = models.DateTimeField(default=datetime.datetime.now())
 
     # state = FSMField(protected=True, default=STATE_NEW)
     # should use fsm ******* @MohammadReza
@@ -132,3 +132,24 @@ class Appointment(AppointmentRequest):
 
     class Meta:
         proxy = True
+
+    def update_start_time(self, total_seconds):
+        hours, seconds = divmod(total_seconds, 3600)
+        minutes, seconds = divmod(seconds, 60)
+        print(seconds)
+        print(minutes)
+        print(hours)
+        print(self.start_time)
+        hour = self.start_time.hour + hours
+        minute = self.start_time.minute + minutes
+        second = self.start_time.second + seconds
+        tmp_min, second = divmod(second, 60)
+        minute += tmp_min
+        tmp_hour, minute = divmod(minute, 60)
+        hour += tmp_hour
+        day, hour = divmod(hour, 24)
+        new_time = datetime.time(hour=hour,
+                                 minute=minute,
+                                 second=second)
+        self.start_time = new_time
+        self.save()
