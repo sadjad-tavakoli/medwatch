@@ -3,6 +3,18 @@
     <div class="item">
         <img src="/images/logo.png">
     </div>
-    <a class="item">serfan vase tamayose agent</a>
+    <a class="item" href="{% url 'home' %}">home</a>
+    <a class="item" href="{% url 'members:agent:appointment-list' %}">Appointment List</a>
     <a class="item">Sign-in</a>
+{% endblock %}
+{% block body %}
+    <div class="ui main text container">
+        <h1 class="ui header"></h1>
+
+        <div>
+            {% block inline_body %}
+            {% endblock %}
+        </div>
+    </div>
+
 {% endblock %}

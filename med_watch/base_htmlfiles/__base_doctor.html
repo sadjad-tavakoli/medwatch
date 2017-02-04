@@ -9,3 +9,14 @@
     <a href="{% url 'members:dr_edit_profile' %}" class="item">Edit Profile</a>
     <a href="{% url 'members:logout' %}" class="item">Sign-Out</a>
 {% endblock %}
+{% block body %}
+    <div class="ui main container">
+        <h1 class="ui header"></h1>
+
+        <div>
+            {% block inline_body %}
+            {% endblock %}
+        </div>
+    </div>
+
+{% endblock %}

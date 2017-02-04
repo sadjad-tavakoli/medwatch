@@ -8,3 +8,15 @@
     <a class="item" href="{% url 'members:patient:appointment-list' %}">Appointments</a>
     <a href="{% url 'members:logout' %}" class="item">Sign-Out</a>
 {% endblock %}
+
+{% block body %}
+    <div class="ui main text container">
+        <h1 class="ui header"></h1>
+
+        <div>
+            {% block inline_body %}
+            {% endblock %}
+        </div>
+    </div>
+
+{% endblock %}
