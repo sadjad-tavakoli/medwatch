@@ -18,10 +18,12 @@
                         {{ agent.member.national_id }}
                     </div>
                 </div>
+                <a href="{% url 'members:doctor:remove-agent' agent.id%}">
                 <div class="ui bottom attached button">
                     <i class="remove icon"></i>
                     remove
                 </div>
+                </a>
             </div>
         {% endfor %}
     </div>

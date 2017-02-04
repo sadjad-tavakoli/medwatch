@@ -1,4 +1,6 @@
 from django.core.urlresolvers import reverse
+from django.shortcuts import redirect
+from django.views.generic.base import View
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 
@@ -35,5 +37,12 @@ class DefineAgents(CreateView):
     def get_context_data(self, **kwargs):
         context = super(DefineAgents, self).get_context_data(**kwargs)
         context['agents'] = self.request.user.doctor_member.agents.all()
-        # context['members'] = Member.objects.all()
         return context
+
+
+class RemoveAgents(View):
+    def get(self, request, *args, **kwargs):
+        agent_id = self.kwargs.get('agent_id', None)
+        agent = Agent.objects.get(id=agent_id)
+        agent.delete()
+        return redirect('members:doctor:agents-manger')

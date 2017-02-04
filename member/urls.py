@@ -1,6 +1,5 @@
 from django.conf.urls import url, include
-
-from member.views.agents import DefineAgents
+from member.views.agents import DefineAgents, RemoveAgents
 from member.views.join_views import JoinView, DoctorJoinView
 from member.views.login_views import LoginView, LogoutView
 from member.views.profile_views import EditProfileView, ProfileView, DrEditProfile
@@ -21,8 +20,8 @@ patient_url_patterns = [
 ]
 doctor_url_patterns = [
     url(r'^agents/$', DefineAgents.as_view(), name='agents-manger'),
-    url(r'^cancel_appointment/(?P<appointment_id>\d+)/$', CancelAppointments.as_view(),
-        name='cancel-appointment'),
+    url(r'^remove_agents/(?P<agent_id>\d+)/$', RemoveAgents.as_view(),
+        name='remove-agent'),
     url(r'^edit_appointment/(?P<appointment_id>\d+)/$', EditAppointmentView.as_view(),
         name='edit-appointment'),
 
