@@ -118,7 +118,6 @@ class Appointment(AppointmentRequest):
         self.state = APS_POSTPONED
         self.save()
 
-        reschedule_message = ''
         if reschedule:
             doctor_schedule = DoctorSchedule.get_by_doctor(self.doctor)
             first_free_time = doctor_schedule.get_first_free_time()
@@ -126,13 +125,13 @@ class Appointment(AppointmentRequest):
                                                          doctor=self.doctor,
                                                          date=first_free_time.date(),
                                                          time=first_free_time.time())
-            mail_service.send_mail(template='appointment_reschedule', context={
+            mail_service.send_mail(topic='appointment_reschedule', context={
                 'appointment': self,
                 'new_appointment': new_appointment,
             })
             message = 'Appointment Postponed to {}'.format(first_free_time)
         else:
-            mail_service.send_mail(template='appointment_cancel', context={
+            mail_service.send_mail(topic='appointment_cancel', context={
                 'appointment': self,
             })
             message = 'Appointment Canceled by Doctor'
