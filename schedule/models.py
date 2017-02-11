@@ -144,10 +144,6 @@ class Appointment(AppointmentRequest):
     def update_start_time(self, total_seconds):
         hours, seconds = divmod(total_seconds, 3600)
         minutes, seconds = divmod(seconds, 60)
-        print(seconds)
-        print(minutes)
-        print(hours)
-        print(self.start_time)
         hour = self.start_time.hour + hours
         minute = self.start_time.minute + minutes
         second = self.start_time.second + seconds
