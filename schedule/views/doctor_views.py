@@ -56,7 +56,7 @@ class AppointmentRequestsView(TemplateView):
 
 class AppointmentRequestResolvingView(View):
     def post(self, request, *args, **kwargs):
-        request_id = request.POST.get('request_id')
+        request_id = request.POST['request_id']
         action = request.POST.get('action', 'accept')
         appointment_request = AppointmentRequest.objects.get(id=request_id)
 

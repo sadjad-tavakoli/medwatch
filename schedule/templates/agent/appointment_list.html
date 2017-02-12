@@ -1,4 +1,4 @@
-{% extends '__base_member.html' %}
+{% extends '__base_agent.html' %}
 {% block inline_body %}
     {{ block.super }}
     <div class="ui middle aligned divided list ">
@@ -6,23 +6,24 @@
         {% for object in object_list %}
             <div class="item">
                 <a class="ui tiny image">
-                    <img src="{{ object.doctor.image_url }}">
+                    <img src="{{ object.patient.image_url }}">
                 </a>
 
                 <div class="content">
-                    <a class="header">{{ object.doctor.get_name }}</a>
-
+                    <a class="header">{{ object.patient.get_name }}</a>
                     <div class="description">
-                        <p>{{ object.date }}-{{ object.id }}-{{ object.doctor.address }}address.
+                        <p>{{ object.date }}-{{ object.id }}
                         </p>
                     </div>
-
                 </div>
                 <div class="extra">
-                    <a href="{% url 'members:patient:edit-appointment' appointment_id=object.id %}" class="ui right floated button">
+                    start time : {{ object.start_time }}
+                    <a href="{% url 'members:agent:edit-appointment' appointment_id=object.id %}"
+                       class="ui right floated button">
                         Edit
                     </a>
-                    <a href="{% url 'members:patient:cancel-appointment' appointment_id=object.id %}" class="ui right floated button red">
+                    <a href="{% url 'members:agent:cancel-appointment' appointment_id=object.id %}"
+                       class="ui right floated button red">
                         Cancel
                     </a>
                 </div>

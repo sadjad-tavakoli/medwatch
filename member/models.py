@@ -2,7 +2,6 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.fields.files import ImageField
 from polymorphic.models import PolymorphicModel
-
 from med_watch.model_mixins import get_url
 from med_watch.settings import DEGREECHOICES
 
@@ -10,7 +9,7 @@ from med_watch.settings import DEGREECHOICES
 class AbstractMember(PolymorphicModel):
     first_name = models.CharField(max_length=30, null=True, blank=True)
     last_name = models.CharField(max_length=30, null=True, blank=True)
-    profile_picture = models.ImageField(upload_to='profile_pictures/')
+    profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
     national_id = models.IntegerField()
 
     def __str__(self):
@@ -33,7 +32,9 @@ class AbstractMember(PolymorphicModel):
             return None, None
 
     def get_name(self):
-        return '{} {}'.format(self.first_name, self.last_name)
+        if self.first_name is not None or self.last_name is not None:
+            return '{} {}'.format(self.first_name, self.last_name)
+        return self.primary_user.username
 
     @property
     def image_url(self):
@@ -123,3 +124,7 @@ class Member(AbstractMember):
 class Agent(models.Model):
     doctor = models.ForeignKey(DoctorMember, null=False, related_name='agents')
     member = models.OneToOneField(Member, null=False)
+
+    @property
+    def image_url(self):
+        return self.member.image_url

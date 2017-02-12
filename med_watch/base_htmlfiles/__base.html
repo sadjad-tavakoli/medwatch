@@ -4,12 +4,6 @@
         {% block navbar-item %}
         {% endblock %}
     </div>
-    <div class="ui main text container">
-        <h1 class="ui header"></h1>
-
-        <div>
-            {% block body %}
-            {% endblock %}
-        </div>
-    </div>
+    {% block body %}
+    {% endblock %}
 {% endblock %}

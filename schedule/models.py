@@ -1,7 +1,7 @@
-from datetime import datetime, time
+import datetime
 
+from datetime import time
 from django.db import models
-
 from med_watch.services import mail_service
 
 
@@ -69,7 +69,7 @@ class AppointmentRequest(models.Model):
     start_time = models.TimeField()
     date = models.DateField()
     state = models.CharField(choices=APPOINTMENT_STATES, default=APS_REQUESTED, max_length=1)
-    created = models.DateTimeField(default=datetime.now())
+    created = models.DateTimeField(default=datetime.datetime.now())
 
     # state = FSMField(protected=True, default=STATE_NEW)
     # should use fsm ******* @MohammadReza
@@ -91,6 +91,14 @@ class AppointmentRequest(models.Model):
         self.save()
         return message
 
+    def get_next_appointments(self):
+        appointment_list = []
+        for appointment_item in Appointment.objects.all():
+            if appointment_item.start_time > self.start_time:
+                appointment_list.append(appointment_item)
+
+        return appointment_list
+
 
 class AppointmentManager(models.Manager):
     def get_queryset(self):
@@ -110,7 +118,6 @@ class Appointment(AppointmentRequest):
         self.state = APS_POSTPONED
         self.save()
 
-        reschedule_message = ''
         if reschedule:
             doctor_schedule = DoctorSchedule.get_by_doctor(self.doctor)
             first_free_time = doctor_schedule.get_first_free_time()
@@ -118,13 +125,13 @@ class Appointment(AppointmentRequest):
                                                          doctor=self.doctor,
                                                          date=first_free_time.date(),
                                                          time=first_free_time.time())
-            mail_service.send_mail(template='appointment_reschedule', context={
+            mail_service.send_mail(topic='appointment_reschedule', context={
                 'appointment': self,
                 'new_appointment': new_appointment,
             })
             message = 'Appointment Postponed to {}'.format(first_free_time)
         else:
-            mail_service.send_mail(template='appointment_cancel', context={
+            mail_service.send_mail(topic='appointment_cancel', context={
                 'appointment': self,
             })
             message = 'Appointment Canceled by Doctor'
@@ -132,3 +139,20 @@ class Appointment(AppointmentRequest):
 
     class Meta:
         proxy = True
+
+    def update_start_time(self, total_seconds):
+        hours, seconds = divmod(total_seconds, 3600)
+        minutes, seconds = divmod(seconds, 60)
+        hour = self.start_time.hour + hours
+        minute = self.start_time.minute + minutes
+        second = self.start_time.second + seconds
+        tmp_min, second = divmod(second, 60)
+        minute += tmp_min
+        tmp_hour, minute = divmod(minute, 60)
+        hour += tmp_hour
+        day, hour = divmod(hour, 24)
+        new_time = datetime.time(hour=hour,
+                                 minute=minute,
+                                 second=second)
+        self.start_time = new_time
+        self.save()
