@@ -11,7 +11,8 @@ def SearchInDoctors(request):
     str = name.split(" ")
     result_doctors = []
     for item in str:
-        if models.DoctorMember.objects.filter(Q(first_name=item) | Q(last_name=item)):
+        # if models.DoctorMember.objects.filter(Q(first_name=item) | Q(last_name=item)):
+            models.DoctorMember.objects.filter()
             print("appendid")
             result_doctors.append(models.DoctorMember.objects.filter(Q(first_name=item) | Q(last_name=item)))
 
