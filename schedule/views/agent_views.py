@@ -1,8 +1,8 @@
 import datetime
-
 from django.core.urlresolvers import reverse
+from django.shortcuts import redirect
+from django.views.generic.base import View
 from django.views.generic.list import ListView
-
 from med_watch.permissions import AgentPermissionMixin
 from schedule.models import Appointment
 from schedule.views.member_views import EditAppointmentView
@@ -34,3 +34,12 @@ class AgentEditAppointmentView(AgentPermissionMixin, EditAppointmentView):
 
     def get_success_url(self):
         return reverse('members:agent:appointment-list')
+
+
+class AgentCancelAppointments(AgentPermissionMixin, View):
+    def get(self, request, *args, **kwargs):
+        appointment_id = self.kwargs.get('appointment_id', None)
+        appointment = Appointment.objects.get(doctor=self.request.access_level.doctor,
+                                              id=appointment_id)
+        appointment.cancel()
+        return redirect('members:agent:appointment-list')
