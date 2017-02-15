@@ -11,7 +11,7 @@ class JoinView(CreateView):
     template_name = 'member/join.html'
     model = Member
     form_class = JoinForm
-
+    print("doooone")
     def get_success_url(self):
         return reverse('home')
 

@@ -25,7 +25,7 @@ class JoinForm(forms.ModelForm):
     def clean_email(self):
         email = self.cleaned_data['email']
         try:
-            Member.objects.get(primary_user__email=email)
+            mem = Member.objects.get(primary_user__email=email)
             raise forms.ValidationError('Your email address already exists')
         except Member.DoesNotExist:
             return email
@@ -46,7 +46,6 @@ class JoinForm(forms.ModelForm):
             )
         try:
             # TODO bug bug bug bug bug bug bug bug @sadjad
-            DoctorMember.objects.get(primary_user__username=username)
             Member.objects.get(primary_user__username=username)
             raise forms.ValidationError('Your username already exists')
         except DoctorMember.DoesNotExist:
@@ -104,7 +103,6 @@ class DoctorJoinForm(forms.ModelForm):
             )
         try:
             DoctorMember.objects.get(primary_user__username=username)
-            Member.objects.get(primary_user__username=username)
             raise forms.ValidationError('Your username already exists')
         except AbstractMember.DoesNotExist or Member.DoesNotExist:
             pass
