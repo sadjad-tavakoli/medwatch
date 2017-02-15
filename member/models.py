@@ -9,7 +9,7 @@ from med_watch.settings import DEGREECHOICES
 class AbstractMember(PolymorphicModel):
     first_name = models.CharField(max_length=30, null=True, blank=True)
     last_name = models.CharField(max_length=30, null=True, blank=True)
-    profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
+    profile_picture = models.ImageField(upload_to='/profile_pictures/', blank=True, null=True)
     national_id = models.IntegerField()
 
     def __str__(self):

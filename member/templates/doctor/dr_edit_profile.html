@@ -1,24 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+{% extends '__base_doctor.html' %}}
+{% load static %}
+{% block title %}
     <meta charset="UTF-8">
-    <title>Edit Doctor Profile </title>
-</head>
-<body>
-<p>
-    for {{ user.username }}({{ user.first_name }}&nbsp{{ user.last_name }})
-</p>
-<div>
-    <form id="edit-prof-form" action="" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <table>
-            {{ form.as_table }}
-        </table>
-        <input id="save-btn" type="submit" value="Save" style="cursor: pointer;">
+    Edit Doctor Profile
+{% endblock %}
+{% block body %}
+    <div>
+        <form class="ui form" id="edit-prof-form" action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <table class="">
+                {{ form.as_table }}
+            </table>
+            <input class="ui teal button" id="save-btn" type="submit" value="Save" style="cursor: pointer;">
 
-        {{ requst.user.user }}
-    </form>
-</div>
+            {{ requst.user.user }}
+        </form>
+    </div>
 
-</body>
-</html>
+{% endblock %}

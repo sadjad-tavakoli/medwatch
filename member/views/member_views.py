@@ -8,13 +8,14 @@ from member import models
 def SearchInDoctors(request):
 
     name = request.POST.get('name_search', "")
-    str = name.split(" ")
-    result_doctors = []
-    for item in str:
-        # if models.DoctorMember.objects.filter(Q(first_name=item) | Q(last_name=item)):
-            models.DoctorMember.objects.filter()
-            print("appendid")
-            result_doctors.append(models.DoctorMember.objects.filter(Q(first_name=item) | Q(last_name=item)))
+    result_doctors = models.DoctorMember.objects.filter(Q(first_name=name) | Q(last_name=name))
+    print(name)
+    # str = name.split(" ")
+    # for item in str:
+    #     if models.DoctorMember.objects.filter(Q(first_name=item) | Q(last_name=item)):
+    #         models.DoctorMember.objects.filter()
+    #         print("appendid")
+    #         result_doctors.append(models.DoctorMember.objects.filter(Q(first_name=item) | Q(last_name=item)))
 
     print(result_doctors)
 
