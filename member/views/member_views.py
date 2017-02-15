@@ -20,3 +20,7 @@ def SearchInDoctors(request):
 
 
     return render(request, 'member/search_in_doctors.html', {'result_doctors': result_doctors})
+
+def DoctorsInNeighbourhood(request):
+
+    return render(request, 'member/dr_in_neighbourhood.html')

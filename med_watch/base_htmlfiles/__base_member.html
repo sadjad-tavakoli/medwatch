@@ -5,6 +5,7 @@
         <img src="{% static request.access_level.member.image_url %}">
     </div>
     <a href="{% url 'members:patient:search-in-dr' %}" class="item">search doctor</a>
+    <a href="{% url 'members:patient:dr-in-neighbourhood' %}" class="item">doctors in neighbourhood</a>
     <a class="item" href="{% url 'members:patient:appointment-list' %}">Appointments</a>
     <a href="{% url 'members:logout' %}" class="item">Sign-Out</a>
 {% endblock %}

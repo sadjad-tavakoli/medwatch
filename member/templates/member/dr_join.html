@@ -110,16 +110,22 @@
                     </div>
                 </div>
 
-                <div class="field">
-                    <label>Profile Picture</label>
-                    {{ form.profile_picture }}
+                <div class="two fields">
+                    <div class="field">
+                        <label>Profile Picture</label>
+                        {{ form.profile_picture }}
+                    </div>
+                    <div class="field">
+                        <label>Contraction</label>
+                        {{ form.contraction }}
+                    </div>
                 </div>
                 <input type="submit" class="ui fluid teal submit button" value="Join">
             </div>
             <div class="ui error message"></div>
-        {% if form.errors %}
-            {{ form.errors }}
-        {% endif %}
+            {% if form.errors %}
+                {{ form.errors }}
+            {% endif %}
         </form>
     </div>
 
