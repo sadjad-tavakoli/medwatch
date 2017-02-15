@@ -122,5 +122,6 @@ class DoctorJoinForm(forms.ModelForm):
                                              national_id=data['national_id'],
                                              email=data['email'],
                                              first_name=data['first_name'],
-                                             last_name=data['last_name'])
+                                             last_name=data['last_name'],
+                                             address=data['address'])
         return member

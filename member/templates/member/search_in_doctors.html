@@ -21,28 +21,25 @@
         </form>
         <div name="search_result" style="overflow: auto;margin: 5px; height: 60px; border: groove; height: 40%">
             <div class="ui items">
-            {% for d in result_doctors %}
-                <div class="item">
-                    <div class="ui small image">
-{#                        <img src="media/{{ d.profile_picture }}">#}
-                    </div>
-                    <div class="content">
-                        <div class="header">{{ d.first_name }} {{ d.last_name }}</div>
-                        <div class="meta">
-                            <span class="price">{{ d.degree }}</span>
-                            <span class="stay"> , graduated in {{ d.graduate_year}} </span>
+                {% for d in result_doctors %}
+                    <div class="item">
+
+                        <a class="ui tiny image" href="">
+                            <img src="../../static/used/profile.jpg">
+                            {# TODO: akse har doctor biad                            #}
+                        </a>
+                        <div class="content">
+                            <div class="header">{{ d.first_name }} {{ d.last_name }}</div>
+                            <div class="meta">
+                                <span class="price">{{ d.degree }}</span>
+                                <span class="stay"> , graduated in {{ d.graduate_year }} </span>
+                            </div>
+                            <div class="description">
+                                <p>address: {% if d.address == "" %} - {% else %} {{ d.address }} {% endif %}</p>
+                            </div>
                         </div>
-                        <div class="description">
-{#                            <p> {{ d.address }} </p>#}
-                        </div>
                     </div>
-                </div>
-{##}
-{##}
-{#                <div>#}
-{#                    <div> {{ d.first_name }} - {{ d.last_name }}</div>#}
-{#                </div>#}
-            {% endfor %}
+                {% endfor %}
             </div>
         </div>
 {% endblock %}

@@ -53,7 +53,8 @@ class DoctorMemberManager(models.Manager):
                university=None, graduate_year=None, degree=None, profile_picture=None,
                contraction=None,
                first_name=None,
-               last_name=None):
+               last_name=None,
+               address=None):
         if primary_user is not None:
             username = primary_user.get('username', username)
             password = primary_user.get('password', password)
@@ -70,7 +71,8 @@ class DoctorMemberManager(models.Manager):
                                                                    last_name=last_name,
                                                                    national_id=national_id,
                                                                    profile_picture=profile_picture,
-                                                                   contraction = contraction
+                                                                   contraction = contraction,
+                                                                   address=address
                                                                    )
 
         return member
@@ -82,6 +84,7 @@ class DoctorMember(AbstractMember):
     university = models.CharField(max_length=50, null=False, blank=True)
     graduate_year = models.IntegerField(default=1360)
     contraction = models.FileField(upload_to='contractions/', blank=True, null=True)
+    address = models.CharField(max_length=200, blank=False, null=False, default="")
     objects = DoctorMemberManager()
 
     def __str__(self):
