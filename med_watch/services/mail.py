@@ -5,11 +5,11 @@ from django.template.loader import render_to_string
 META = {
     'appointment_reschedule': {
         'subject': 'Appointment Rescheduled',
-        'template': 'appointment_reschedule',
+        'template': 'mail/appointment_reschedule.html',
     },
     'appointment_cancel': {
         'subject': 'Appointment Canceled',
-        'template': 'appointment_cancel',
+        'template': 'mail/appointment_cancel.html',
     },
 }
 

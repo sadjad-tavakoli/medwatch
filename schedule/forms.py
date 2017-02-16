@@ -1,7 +1,19 @@
+from types import MethodType
+
 from django import forms
-from django.forms.widgets import ChoiceInput
 from extra_views.advanced import InlineFormSet
+
 from schedule.models import DailySchedule, DoctorSchedule, Appointment
+
+DAYS = [
+    'Saturday',
+    'Sunday',
+    'Monday',
+    'Thursday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+]
 
 
 class DailyScheduleInline(InlineFormSet):
@@ -10,6 +22,23 @@ class DailyScheduleInline(InlineFormSet):
 
     can_delete = False
     fields = ('start_time', 'end_time')
+
+    def __init__(self, *args, **kwargs):
+        super(DailyScheduleInline, self).__init__(*args, **kwargs)
+
+    def construct_formset(self, **kwargs):
+        formset = super(DailyScheduleInline, self).construct_formset(**kwargs)
+
+        def clean(self):
+            cleaned_data = super(type(self), self).clean()
+            if cleaned_data['start_time'] > cleaned_data['end_time']:
+                raise forms.ValidationError("Start time should less than or equal to end time")
+            return cleaned_data
+
+        for i, form in enumerate(list(formset.forms)):
+            form.day = DAYS[i]
+            form.clean = MethodType(clean, form)
+        return formset
 
 
 class DoctorScheduleForm(forms.ModelForm):

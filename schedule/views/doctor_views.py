@@ -13,7 +13,7 @@ class ScheduleView(UpdateWithInlinesView):
     model = DoctorSchedule
     form_class = DoctorScheduleForm
     inlines = [DailyScheduleInline, ]
-    template_name = 'schedule.html'
+    template_name = 'doctor/schedule.html'
     success_url = '.'
 
     def get_object(self, queryset=None):
