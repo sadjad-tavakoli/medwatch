@@ -32,7 +32,7 @@ class DailyScheduleInline(InlineFormSet):
         def clean(self):
             cleaned_data = super(type(self), self).clean()
             if cleaned_data['start_time'] > cleaned_data['end_time']:
-                raise forms.ValidationError("Start time should less than or equal to end time")
+                raise forms.ValidationError("Start time should be less than or equal to end time")
             return cleaned_data
 
         for i, form in enumerate(list(formset.forms)):
