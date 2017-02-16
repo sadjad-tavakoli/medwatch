@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'polymorphic',
     'member',
-    'django_fsm',
     'schedule',
 ]
 
