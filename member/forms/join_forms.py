@@ -60,7 +60,10 @@ class JoinForm(forms.ModelForm):
         member = Member.objects.create(username=data['username'],
                                        password=data['password'],
                                        national_id=data['national_id'],
-                                       email=data['email'])
+                                       email=data['email'],
+                                       first_name=data['first_name'],
+                                       last_name=data['last_name'],
+                                       )
         return member
 
 

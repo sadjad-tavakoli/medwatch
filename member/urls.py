@@ -2,7 +2,7 @@ from django.conf.urls import url, include
 from member.views.agents import DefineAgents, RemoveAgents
 from member.views.join_views import JoinView, DoctorJoinView, download_contract
 from member.views.login_views import LoginView, LogoutView
-from member.views.member_views import SearchInDoctors, DoctorsInNeighbourhood
+from member.views.member_views import SearchInDoctors, DoctorsInNeighbourhood, ShowDoctorPage
 from member.views.profile_views import EditProfileView, ProfileView, DrEditProfile
 from schedule.views.agent_views import AgentAppointmentsList, AgentEditAppointmentView, \
     AgentCancelAppointments
@@ -46,8 +46,9 @@ urlpatterns = [
     url(r'^logout/$', LogoutView.as_view(), name='logout'),
     url(r'^profile/', include(profile_url_patterns, namespace='profile')),
     url(r'^patient/', include(patient_url_patterns, namespace='patient')),
-    url(r'^doctor/', include(doctor_url_patterns, namespace='doctor')),
+    url(r'^doctors/', include(doctor_url_patterns, namespace='doctor')),
     url(r'^agent/', include(agent_url_patterns, namespace='agent')),
     url(r'^contract-download/', download_contract),
     url(r'^dr-edit-profile/', DrEditProfile.as_view(), name='dr_edit_profile'),
+    url(r'^doctors/([0-9]*)/$', ShowDoctorPage, name='show_dr_page'),
 ]

@@ -5,7 +5,10 @@
     Edit Doctor Profile
 {% endblock %}
 {% block body %}
-    <div>
+    <div class="ui horizontal divider">
+        Edit Profile
+    </div>
+    <div class="ui text container">
         <form class="ui form" id="edit-prof-form" action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <table class="">
