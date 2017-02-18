@@ -1,7 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.forms.models import fields_for_model
-
 from med_watch.model_mixins import username_regex
 from member.models import Member, DoctorMember, AbstractMember
 
@@ -45,12 +44,8 @@ class JoinForm(forms.ModelForm):
                 'Username should be at least 6 characters long.'
             )
         try:
-            # TODO bug bug bug bug bug bug bug bug @sadjad
-            DoctorMember.objects.get(primary_user__username=username)
             Member.objects.get(primary_user__username=username)
             raise forms.ValidationError('Your username already exists')
-        except DoctorMember.DoesNotExist:
-            pass
         except Member.DoesNotExist:
             pass
         return username
@@ -60,6 +55,8 @@ class JoinForm(forms.ModelForm):
         member = Member.objects.create(username=data['username'],
                                        password=data['password'],
                                        national_id=data['national_id'],
+                                       first_name=data['first_name'],
+                                       last_name=data['last_name'],
                                        email=data['email'])
         return member
 

@@ -13,7 +13,7 @@
         <form class="ui form" enctype="multipart/form-data" action="" method="post" novalidate
               autocomplete="off">
             {% csrf_token %}
-
+            {{ form.errors }}
             <div class="ui stacked segment">
                 <div class="two fields">
                     <div class="field">
