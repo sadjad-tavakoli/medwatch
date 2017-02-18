@@ -1,13 +1,12 @@
-{% extends "__base_no_navbar.html" %}
+{% extends "base/base_no_navbar.html" %}
 {% block body %}
     <div>
         <h5></h5>
 
         <h2 class="ui teal image header">
-            <img src="assets/images/logo.png" class="image">
 
             <div class="content">
-                join
+                Doctor Join
             </div>
         </h2>
         <form class="ui form" enctype="multipart/form-data" action="" method="post" novalidate
@@ -109,17 +108,34 @@
                         {% endif %}
                     </div>
                 </div>
-
                 <div class="field">
-                    <label>Profile Picture</label>
-                    {{ form.profile_picture }}
+                    <label>Address</label>
+                    {{ form.address }}
+
                 </div>
-                <input type="submit" class="ui fluid teal submit button" value="Join">
+                <div class="three fields">
+                    <div class="field">
+                        <label>Profile Picture</label>
+                        {{ form.profile_picture }}
+                    </div>
+                    <div class="field">
+                        <label>Contraction upload</label>
+                        {{ form.contraction }}
+                    </div>
+                    <div class="field">
+                        <label>Contraction download</label>
+
+                        <button class="ui button active"><i class="download icon"></i>
+                            <a id="download" value="download" href="../contract-download"> download </a>
+                        </button>
+                    </div>
+                </div>
+                <input type="submit" id="dr-join" class="ui fluid teal submit button" value="Join">
             </div>
             <div class="ui error message"></div>
-        {% if form.errors %}
-            {{ form.errors }}
-        {% endif %}
+            {% if form.errors %}
+                {{ form.errors }}
+            {% endif %}
         </form>
     </div>
 

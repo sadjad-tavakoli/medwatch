@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'polymorphic',
     'member',
-    'django_fsm',
     'schedule',
 ]
 
@@ -57,8 +56,7 @@ ROOT_URLCONF = 'med_watch.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'med_watch', 'base_htmlfiles'),
-                 os.path.join(BASE_DIR, 'med_watch', 'mail_templates'),]
+        'DIRS': [os.path.join(BASE_DIR, 'med_watch', 'templates'),]
         ,
         'APP_DIRS': True,
         'OPTIONS': {

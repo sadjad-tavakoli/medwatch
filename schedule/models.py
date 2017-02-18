@@ -69,10 +69,7 @@ class AppointmentRequest(models.Model):
     start_time = models.TimeField()
     date = models.DateField()
     state = models.CharField(choices=APPOINTMENT_STATES, default=APS_REQUESTED, max_length=1)
-    created = models.DateTimeField(default=datetime.datetime.now())
-
-    # state = FSMField(protected=True, default=STATE_NEW)
-    # should use fsm ******* @MohammadReza
+    created = models.DateTimeField(default=datetime.datetime.now)
 
     def resolve(self, action):
         if action == 'accept':

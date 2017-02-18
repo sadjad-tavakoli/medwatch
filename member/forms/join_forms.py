@@ -1,8 +1,10 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.forms.models import fields_for_model
+
 from med_watch.model_mixins import username_regex
 from member.models import Member, DoctorMember, AbstractMember
+from django.contrib.admin.widgets import AdminFileWidget
 
 
 class JoinForm(forms.ModelForm):
@@ -46,6 +48,8 @@ class JoinForm(forms.ModelForm):
         try:
             Member.objects.get(primary_user__username=username)
             raise forms.ValidationError('Your username already exists')
+        except DoctorMember.DoesNotExist:
+            pass
         except Member.DoesNotExist:
             pass
         return username
@@ -55,9 +59,10 @@ class JoinForm(forms.ModelForm):
         member = Member.objects.create(username=data['username'],
                                        password=data['password'],
                                        national_id=data['national_id'],
+                                       email=data['email'],
                                        first_name=data['first_name'],
                                        last_name=data['last_name'],
-                                       email=data['email'])
+                                       )
         return member
 
 
@@ -66,6 +71,7 @@ class DoctorJoinForm(forms.ModelForm):
     email = fields_for_model(User)['email']
     password = fields_for_model(User)['password']
     re_password = forms.CharField(widget=forms.PasswordInput())
+    contraction = forms.FileField(widget=AdminFileWidget)
 
     def __init__(self, *args, **kwargs):
         super(DoctorJoinForm, self).__init__(*args, **kwargs)
@@ -101,7 +107,6 @@ class DoctorJoinForm(forms.ModelForm):
             )
         try:
             DoctorMember.objects.get(primary_user__username=username)
-            Member.objects.get(primary_user__username=username)
             raise forms.ValidationError('Your username already exists')
         except AbstractMember.DoesNotExist or Member.DoesNotExist:
             pass
@@ -115,7 +120,10 @@ class DoctorJoinForm(forms.ModelForm):
                                              university=data['university'],
                                              graduate_year=data['graduate_year'],
                                              profile_picture=data['profile_picture'],
-                                             # contraction=data['contraction'],
+                                             contraction=data['contraction'],
                                              national_id=data['national_id'],
-                                             email=data['email'])
+                                             email=data['email'],
+                                             first_name=data['first_name'],
+                                             last_name=data['last_name'],
+                                             address=data['address'])
         return member

@@ -1,0 +1,47 @@
+{% extends 'base/base_member.html' %}
+{% block title %}
+    Dr. {{ doctor.last_name }}
+{% endblock %}
+{% block body %}
+    <div class="ui horizontal divider">
+        Dr. {{ doctor.last_name }}'s information
+    </div>
+
+    <div class="ui text container">
+        <div class="ui container">
+
+            <div class="ui horizontal divider">
+                Private Information
+            </div>
+
+            <img style="width: 90px; height: 90px; " src="{{ doctor.image_url }}">
+
+            <p>{{ doctor.first_name }}
+                {{ doctor.last_name }} </p>
+            <p> graduated from {{ doctor.university }} in {{ doctor.graduate_year }} </p>
+            <p> {{ doctor.get_degree_display }} </p>
+
+            <div class="ui horizontal divider">
+                Clinic Information
+            </div>
+
+            <p> clinic address: {{ doctor.address }}</p>
+            <p> doctor's agent:
+                {% for agent in agents %}
+                    <p style="padding-left:2em;"> {{ agent.member.first_name }}
+                        {{ agent.member.last_name }} </p>
+                {% endfor %}
+            </p>
+
+            <div class="ui horizontal divider">
+                appointment request
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+{% endblock %}

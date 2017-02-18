@@ -1,0 +1,56 @@
+{% extends 'base/base_doctor.html' %}}
+{% load static %}
+{% block title %} Doctor Schedule Edit {% endblock %}
+{% block inline_body %}
+    {{ block.super }}
+    <div class="ui horizontal divider">
+        Doctor Schedule
+    </div>
+    <div class="ui text container">
+        <form action="." method="post" class="ui form">
+            {% csrf_token %}
+            <div class="ui container">
+
+                <div class="field">
+                    <label>Session Interval
+                    </label>
+                    {{ form.session_interval }}
+                </div>
+            </div>
+            <div class="ui text container">
+                {{ inlines.0.management_form }}
+                {% for formset in inlines.0.forms %}
+                    <h4 class="ui dividing header">{{ formset.day }}</h4>
+                    {% if formset.non_field_errors %}
+                        <div class="ui error message" style="display: block">
+                            {% for err in formset.non_field_errors %}
+                                <p>{{ err }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    {{ formset.id }}
+                    <div class="field">
+
+                        <div class="two fields">
+                            <div class="field">
+                                {{ formset.start_time.errors }}
+                                <label>Start time
+                                </label>
+                                {{ formset.start_time }}
+                            </div>
+                            <div class="field">
+                                {{ formset.end_time.errors }}
+                                <label>End time
+
+                                </label>
+                                {{ formset.end_time }}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <input class="ui primary button" type="submit" value="Submit"/>
+        </form>
+    </div>
+{% endblock %}
+

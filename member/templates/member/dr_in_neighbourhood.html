@@ -1,0 +1,22 @@
+{% extends 'base/base_member.html' %}
+{% block title %}
+    Doctors in Neighbourhood
+{% endblock %}
+
+{% block body %}
+    <form class="ui form" action="" method="post" novalidate>
+        {% csrf_token %}
+        <div class="two fields">
+
+            <input name="name_search" type="" placeholder="search in doctors' name"
+                   style="height: 40px; width: 70%; background-color: azure; margin: 5px;border-radius: 5px"> </input>
+            <input name="address_search" type="text" placeholder="search in address"
+                   style="height: 40px; width: 70%; background-color: azure; margin: 5px;border-radius: 5px"> </input>
+            {#        <input name="degree_search" type="" value="search"#}
+            {#               style="height: 40px; width: 55px; margin: 5px; background-color: cadetblue;border-radius: 5px;cursor: pointer"> </input>#}
+            <input name="search_bottom" type="submit" value="search"
+                   style="height: 40px; width: 55px; margin: 5px; background-color: cadetblue;border-radius: 5px;cursor: pointer"> </input>
+        </div>
+    </form>
+
+{% endblock %}

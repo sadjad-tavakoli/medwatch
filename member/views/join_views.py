@@ -1,3 +1,5 @@
+import os
+
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -5,6 +7,7 @@ from django.views.generic.edit import CreateView
 from member import models
 from member.forms.join_forms import JoinForm, DoctorJoinForm
 from member.models import Member, DoctorMember
+from django.views.static import serve
 
 
 class JoinView(CreateView):
@@ -15,7 +18,6 @@ class JoinView(CreateView):
     def get_success_url(self):
         return reverse('home')
 
-
 class DoctorJoinView(CreateView):
     template_name = 'member/dr_join.html'
     model = DoctorMember
@@ -23,3 +25,8 @@ class DoctorJoinView(CreateView):
 
     def get_success_url(self):
         return reverse('home')
+
+
+def download_contract(request):
+    url = 'member/static/used/agreement_Template.doc'
+    return serve(request, os.path.basename(url), os.path.dirname(url))

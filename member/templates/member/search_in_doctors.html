@@ -1,0 +1,44 @@
+{% extends 'base/base_member.html' %}
+{% block title %}
+    search in doctors
+{% endblock %}
+{% block body %}
+    <div class="ui stacked segment">
+
+        <form class="ui form" action="" method="post" novalidate>
+            {% csrf_token %}
+            <div class="two fields">
+
+                <input name="name_search" type="text" placeholder="search in doctors' name"
+                > </input>
+                <input name="address_search" type="text" placeholder="search in address"
+                > </input>
+                {#        <input name="degree_search" type="" value="search"#}
+                {#               style="height: 40px; width: 55px; margin: 5px; background-color: cadetblue;border-radius: 5px;cursor: pointer"> </input>#}
+                <input name="search_bottom" type="submit" value="search"
+                       class="ui teal button"> </input>
+            </div>
+        </form>
+        <div name="search_result" style="overflow: auto;margin: 5px; height: 60px; border: groove; height: 40%">
+            <div class="ui items">
+                {% for d in result_doctors %}
+                    <div class="item">
+
+                        <a class="ui tiny image" id="{{ d.pk }}" href="/doctors/{{ d.pk }}">
+                            <img style="width: 70px; height: 70px; border-radius: 50%" src="{{ object.doctor.image_url }}">
+                        </a>
+                        <div class="content">
+                            <div class="header">{{ d.first_name }} {{ d.last_name }}</div>
+                            <div class="meta">
+                                <span class="price">{{ d.get_degree_display }}</span>
+                                <span class="stay"> , graduated in {{ d.graduate_year }} </span>
+                            </div>
+                            <div class="description">
+                                <p>address: {% if d.address == "" %} - {% else %} {{ d.address }} {% endif %}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+{% endblock %}

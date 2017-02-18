@@ -9,7 +9,7 @@ from med_watch.settings import DEGREECHOICES
 class AbstractMember(PolymorphicModel):
     first_name = models.CharField(max_length=30, null=True, blank=True)
     last_name = models.CharField(max_length=30, null=True, blank=True)
-    profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
+    profile_picture = models.ImageField(upload_to='/profile_pictures/', blank=True, null=True)
     national_id = models.IntegerField()
 
     def __str__(self):
@@ -51,9 +51,10 @@ class DoctorMemberManager(models.Manager):
     @staticmethod
     def create(username=None, national_id=None, password=None, email=None, primary_user=None,
                university=None, graduate_year=None, degree=None, profile_picture=None,
-               # contraction=None,
+               contraction=None,
                first_name=None,
-               last_name=None):
+               last_name=None,
+               address=None):
         if primary_user is not None:
             username = primary_user.get('username', username)
             password = primary_user.get('password', password)
@@ -70,7 +71,8 @@ class DoctorMemberManager(models.Manager):
                                                                    last_name=last_name,
                                                                    national_id=national_id,
                                                                    profile_picture=profile_picture,
-                                                                   # contraction = contraction
+                                                                   contraction = contraction,
+                                                                   address=address
                                                                    )
 
         return member
@@ -81,12 +83,13 @@ class DoctorMember(AbstractMember):
     degree = models.CharField(choices=DEGREECHOICES, max_length=40, null=False, default='g')
     university = models.CharField(max_length=50, null=False, blank=True)
     graduate_year = models.IntegerField(default=1360)
-    # contraction = models.FileField(upload_to='contractions/', blank=False, null=False)
+    contraction = models.FileField(upload_to='contractions/', blank=True, null=True)
+    address = models.CharField(max_length=200, blank=False, null=False, default="")
     objects = DoctorMemberManager()
 
     def __str__(self):
-        return '{} - {} - {} - {}'.format(self.primary_user, self.degree, self.university,
-                                          self.graduate_year)
+        return '{} - {} - {} - {} - {}'.format(self.primary_user, self.degree, self.university,
+                                          self.graduate_year, self.contraction)
 
 
 class MemberManager(models.Manager):
