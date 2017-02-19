@@ -1,7 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.forms.models import fields_for_model
-
 from med_watch.model_mixins import username_regex
 from member.models import Member, DoctorMember, AbstractMember
 from django.contrib.admin.widgets import AdminFileWidget
@@ -71,7 +70,7 @@ class DoctorJoinForm(forms.ModelForm):
     email = fields_for_model(User)['email']
     password = fields_for_model(User)['password']
     re_password = forms.CharField(widget=forms.PasswordInput())
-    contraction = forms.FileField(widget=AdminFileWidget)
+    contraction = forms.FileField(widget=AdminFileWidget, required=False)
 
     def __init__(self, *args, **kwargs):
         super(DoctorJoinForm, self).__init__(*args, **kwargs)

@@ -1,13 +1,29 @@
 from django.contrib.auth.models import User
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.urlresolvers import reverse
 from django.test.client import Client
 from django_webtest import WebTest
+
 from member.models import Member
 
 
-class JoinTest(WebTest):
+class TestMixin:
     def setUp(self):
-        self.client = Client()
+        super(TestMixin, self).setUp()
+
+        upload_file = open('member/static/used/agreement_Template.doc', 'rb')
+        file = SimpleUploadedFile(upload_file.name, upload_file.read())
+        self.doctor_join_data = {'username': 'medwatch', 'national_id': '2589632145',
+                                 'password': 'medwatch123',
+                                 're_password': 'medwatch123',
+                                 'email': 'medwatch@gmail.com',
+                                 'university': "sharif",
+                                 # 'contraction': file,
+                                 'graduate_year': '1235',
+                                 'degree': 'g',
+                                 'first_name': "medwatch", 'last_name': 'medwatchpour',
+                                 'address': "haminja"}
+
         self.join_data = {
             'first_name': 'sadjad',
             'last_name': 'tavakoli',
@@ -21,6 +37,25 @@ class JoinTest(WebTest):
             'username': 'sadjad',
             'password': 'sadjad123'
         }
+        self.doctor_login_data = {
+            'username': 'medwatch',
+            'password': 'medwatch123'
+        }
+
+    def login(self, data):
+        return self.client.post(reverse('members:login'), data=data)
+
+    def doctor_join(self, data):
+        return self.client.post(path=reverse('members:dr_join'), data=data, follow=True)
+
+    def join(self, data):
+        return self.client.post(path=reverse('members:join'), data=data, follow=True)
+
+
+class MemberJoinLoginTest(TestMixin, WebTest):
+    def setUp(self):
+        super(MemberJoinLoginTest, self).setUp()
+        self.client = Client()
 
     def test_join_member_current_data(self):
         last_member_num = Member.objects.count()
@@ -98,7 +133,7 @@ class JoinTest(WebTest):
         self.assertNotContains(response, 'Passwords not match.')
         self.assertFormError(response, 'form', 'password', ['This field is required.'])
         self.assertEqual(mem_count, Member.objects.count())
-        self.join_data.update({'password': password,'re_password': ""})
+        self.join_data.update({'password': password, 're_password': ""})
         response = self.client.post(reverse('members:join'),
                                     data=self.join_data)
         self.assertNotContains(response, 'Passwords not match.')
@@ -118,8 +153,8 @@ class JoinTest(WebTest):
 
     def test_login_user(self):
         self.client.post(reverse('members:join'), data=self.join_data)
-        self.client.post(reverse('members:login'), data=self.login_data)
-
+        response = self.client.post(reverse('members:login'), data=self.login_data)
+        self.assertTemplateUsed(response, 'home_member.html')
         response = self.client.get(reverse('members:login'))
         self.assertEqual(response.status_code, 302)
         self.client.logout()

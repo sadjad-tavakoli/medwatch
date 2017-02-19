@@ -48,7 +48,7 @@ urlpatterns = [
     url(r'^patient/', include(patient_url_patterns, namespace='patient')),
     url(r'^doctors/', include(doctor_url_patterns, namespace='doctor')),
     url(r'^agent/', include(agent_url_patterns, namespace='agent')),
-    url(r'^contract-download/', download_contract),
+    url(r'^contract-download/', download_contract, name='contraction'),
     url(r'^dr-edit-profile/', DrEditProfile.as_view(), name='dr_edit_profile'),
     url(r'^doctors/([0-9]*)/$', ShowDoctorPage, name='show_dr_page'),
 ]
