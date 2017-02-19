@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from django.test.client import Client
 from django_webtest import WebTest
 
-from member.models import DoctorMember
+from member.models import DoctorMember, Member, Agent
 from member.tests.test_member_views import TestMixin
 
 
@@ -45,7 +45,6 @@ class DoctorJoinLoginTest(TestMixin, WebTest):
         self.assertEqual(mem_count, DoctorMember.objects.count())
         self.doctor_join_data.update({'username': "medwatch"})
         response = self.client.post(reverse('members:dr_join'), data=self.doctor_join_data)
-        print(response.content)
         self.assertEqual(response.status_code, 302)
         self.assertEqual(mem_count + 1, DoctorMember.objects.count())
         self.assertEqual(DoctorMember.objects.last().primary_user.username,
@@ -62,7 +61,6 @@ class DoctorJoinLoginTest(TestMixin, WebTest):
         self.doctor_join_data.update({'password': "medwatch123"})
         response = self.client.post(reverse('members:dr_join'),
                                     data=self.doctor_join_data)
-        print(response.content)
         self.assertEqual(response.status_code, 302)
         self.assertEqual(mem_count + 1, DoctorMember.objects.count())
         self.assertEqual(DoctorMember.objects.last().primary_user.username,
@@ -151,3 +149,73 @@ class DoctorJoinLoginTest(TestMixin, WebTest):
         response = self.client.get(path=reverse('members:login'))
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('home'))
+
+
+class DefineAgentsTest(TestMixin, WebTest):
+    def setUp(self):
+        super(DefineAgentsTest, self).setUp()
+        self.doctor_join_data.pop('re_password')
+        self.doctor = DoctorMember.objects.create(**self.doctor_join_data)
+        self.client = Client()
+        self.client.login(username=self.doctor_join_data['username'],
+                          password=self.doctor_join_data['password'])
+
+    def test_define_agent(self):
+        self.join(self.join_data)
+        self.member = Member.objects.get(primary_user__username=self.join_data['username'])
+        self.assertEqual(Agent.objects.count(), 0)
+        response = self.client.post(reverse('members:doctor:agents-manger'),
+                                    data={'member': [self.member.id]})
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(Agent.objects.count(), 1)
+        self.assertEqual(Agent.objects.first().member, self.member)
+
+    def test_delete_agent(self):
+        self.join(self.join_data)
+        self.member1 = Member.objects.get(primary_user__username=self.join_data['username'])
+        self.join_data.update({'username': 'user22', 'email': 'enmail22@dsf.com'})
+        self.join(self.join_data)
+        self.member2 = Member.objects.get(primary_user__username=self.join_data['username'])
+        self.client.post(reverse('members:doctor:agents-manger'),
+                         data={'member': [self.member1.id]})
+        self.client.post(reverse('members:doctor:agents-manger'),
+                         data={'member': [self.member2.id]})
+        self.assertEqual(self.doctor.agents.count(), 2)
+        self.agent1 = Agent.objects.get(member=self.member1)
+
+        response = self.client.get(
+            reverse('members:doctor:remove-agent', kwargs={'agent_id': self.agent1.id}))
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(self.doctor.agents.count(), 1)
+        self.assertEqual(self.doctor.agents.first().member, self.member2)
+
+    def test_define_assign_agents(self):
+        self.join(self.join_data)
+        self.member1 = Member.objects.get(primary_user__username=self.join_data['username'])
+        self.join_data.update({'username': 'user22', 'email': 'enmail22@dsf.com'})
+        self.join(self.join_data)
+        self.member2 = Member.objects.get(primary_user__username=self.join_data['username'])
+        self.doctor_join_data.update({'username': 'docotr22', 'email': 'emailjadid@ad.ad'})
+        self.doctor_join_data['re_password'] = self.doctor_join_data['password']
+        self.doctor_join(self.doctor_join_data)
+        self.doctor2 = DoctorMember.objects.get(primary_user__username='docotr22')
+        self.client.post(reverse('members:doctor:agents-manger'),
+                         data={'member': [self.member1.id]})
+        self.assertEqual(self.doctor.agents.count(), 1)
+        self.client.logout()
+        self.login(
+            {'username': 'docotr22', 'password': self.doctor_join_data['password']})
+        response = self.client.post(reverse('members:doctor:agents-manger'),
+                                    data={'member': [self.member1.id]})
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Agent with this Member already exists.')
+        self.assertEqual(self.doctor2.agents.count(), 0)
+        self.assertEqual(self.doctor.agents.count(), 1)
+        self.assertEqual(self.doctor.agents.last().member, self.member1)
+        response = self.client.post(reverse('members:doctor:agents-manger'),
+                                    data={'member': [self.member2.id]})
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(self.doctor2.agents.count(), 1)
+        self.assertEqual(self.doctor.agents.count(), 1)
+        self.assertEqual(self.doctor.agents.last().member, self.member1)
+        self.assertEqual(self.doctor2.agents.last().member, self.member2)

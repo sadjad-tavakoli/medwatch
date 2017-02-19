@@ -43,7 +43,7 @@ class TestMixin:
         }
 
     def login(self, data):
-        return self.client.post(reverse('members:login'), data=data)
+        return self.client.post(reverse('members:login'), data=data, follow=True)
 
     def doctor_join(self, data):
         return self.client.post(path=reverse('members:dr_join'), data=data, follow=True)
@@ -153,7 +153,7 @@ class MemberJoinLoginTest(TestMixin, WebTest):
 
     def test_login_user(self):
         self.client.post(reverse('members:join'), data=self.join_data)
-        response = self.client.post(reverse('members:login'), data=self.login_data)
+        response = self.client.post(reverse('members:login'), data=self.login_data, follow=True)
         self.assertTemplateUsed(response, 'home_member.html')
         response = self.client.get(reverse('members:login'))
         self.assertEqual(response.status_code, 302)
