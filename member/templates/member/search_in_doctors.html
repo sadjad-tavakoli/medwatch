@@ -9,6 +9,9 @@
             {% csrf_token %}
             <div class="two fields">
 
+            </div>
+            <div class="three fields">
+
                 <input name="name_search" type="text" placeholder="search in doctors' name"
                 > </input>
                 <input name="address_search" type="text" placeholder="search in address"
@@ -25,7 +28,8 @@
                     <div class="item">
 
                         <a class="ui tiny image" id="{{ d.pk }}" href="/doctors/{{ d.pk }}">
-                            <img style="width: 70px; height: 70px; border-radius: 50%" src="{{ object.doctor.image_url }}">
+                            <img style="width: 70px; height: 70px; border-radius: 50%"
+                                 src="{{ object.doctor.image_url }}">
                         </a>
                         <div class="content">
                             <div class="header">{{ d.first_name }} {{ d.last_name }}</div>
