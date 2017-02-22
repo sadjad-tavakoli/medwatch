@@ -1,5 +1,4 @@
 import os
-
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -17,6 +16,7 @@ class JoinView(CreateView):
 
     def get_success_url(self):
         return reverse('home')
+
 
 class DoctorJoinView(CreateView):
     template_name = 'member/dr_join.html'

@@ -1,0 +1,28 @@
+{% extends 'base/base_member.html' %}
+{% block inline_body %}
+    {{ block.super }}
+    <h3>Session Interval: {{ session_interval }}</h3>
+    <div class="ui middle aligned divided list ">
+
+        {% for slots in available_ranges %}
+            <div class="item">
+                <div><h4>{{ slots.0 }}</h4></div>
+                <div class="ui horizontal list ">
+                    {% for slot in slots.1 %}
+                        <div class="item">
+                            {% if slot.1 %}
+                                <button class="ui mini negative disabled basic button">{{ slot.0 }}</button>
+                            {% else %}
+                                <a href="{{ slots.0.toordinal }}_{{ slot.0.hour }}_{{ slot.0.minute }}/">
+                                    <button class="ui mini positive basic button">{{ slot.0 }}</button>
+                                </a>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% empty %}
+            No available time
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -1,7 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.forms.models import fields_for_model
-
 from med_watch.model_mixins import username_regex
 from member.models import Member, DoctorMember, AbstractMember
 from django.contrib.admin.widgets import AdminFileWidget
@@ -26,7 +25,7 @@ class JoinForm(forms.ModelForm):
     def clean_email(self):
         email = self.cleaned_data['email']
         try:
-            mem = Member.objects.get(primary_user__email=email)
+            Member.objects.get(primary_user__email=email)
             raise forms.ValidationError('Your email address already exists')
         except Member.DoesNotExist:
             return email
@@ -46,7 +45,6 @@ class JoinForm(forms.ModelForm):
                 'Username should be at least 6 characters long.'
             )
         try:
-            # TODO bug bug bug bug bug bug bug bug @sadjad
             Member.objects.get(primary_user__username=username)
             raise forms.ValidationError('Your username already exists')
         except DoctorMember.DoesNotExist:
@@ -72,7 +70,7 @@ class DoctorJoinForm(forms.ModelForm):
     email = fields_for_model(User)['email']
     password = fields_for_model(User)['password']
     re_password = forms.CharField(widget=forms.PasswordInput())
-    contraction = forms.FileField(widget=AdminFileWidget)
+    contraction = forms.FileField(widget=AdminFileWidget, required=False)
 
     def __init__(self, *args, **kwargs):
         super(DoctorJoinForm, self).__init__(*args, **kwargs)

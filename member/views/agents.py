@@ -5,7 +5,7 @@ from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 
 from med_watch.permissions import DoctorPermissionMixin
-from member.models import Agent, Member
+from member.models import Agent
 
 
 class AgentsListView(ListView):
