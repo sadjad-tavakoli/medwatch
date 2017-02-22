@@ -12,7 +12,8 @@ def SearchInDoctors(request):
         name = request.POST.get('name_search', "")
         address = request.POST.get('address_search', "")
         name_words = name.split(" ")
-        result_doctors = models.DoctorMember.objects.filter(Q(first_name__in=name_words) | Q(last_name__in=name_words) | Q(address=address))
+        result_doctors = models.DoctorMember.objects.filter(Q(first_name__in=name_words) | Q(last_name__in=name_words) | Q(address=address)
+                                                            | Q(address__icontains=address))
 
     return render(request, 'member/search_in_doctors.html', {'result_doctors': result_doctors})
 

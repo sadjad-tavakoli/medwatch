@@ -38,9 +38,9 @@ class AppointmentRequestsView(TemplateView):
         for ap_req in appointment_requests:
             day_appointments = filter(lambda x: x.date == ap_req.date, current_appointments)
             daily_schedule = doctor_schedule.get_daily_schedule(ap_req.date)
-            if ap_req.start_time > daily_schedule.end_time - timedelta(minutes=session_interval) or \
-                            ap_req.start_time < daily_schedule.start_time or \
-                    any(abs((ap_req.start_time - other_ap.start_time).total_seconds()) < session_interval * 60
+            if (ap_req.start_time > daily_schedule.end_time - timedelta(minutes=session_interval) |
+                            ap_req.start_time < daily_schedule.start_time |
+                    any(abs((ap_req.start_time - other_ap.start_time).total_seconds()) < session_interval * 60)
                         for other_ap in day_appointments):
                 ap_req.acceptable = False
             else:
