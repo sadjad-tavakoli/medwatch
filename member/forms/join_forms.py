@@ -1,9 +1,10 @@
 from django import forms
+from django.contrib.admin.widgets import AdminFileWidget
 from django.contrib.auth.models import User
 from django.forms.models import fields_for_model
+
 from med_watch.model_mixins import username_regex
 from member.models import Member, DoctorMember, AbstractMember
-from django.contrib.admin.widgets import AdminFileWidget
 
 
 class JoinForm(forms.ModelForm):

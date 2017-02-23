@@ -3,9 +3,10 @@ from django.shortcuts import redirect
 from django.views.generic.base import View
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
+from django.db.models import Q
 
 from med_watch.permissions import DoctorPermissionMixin
-from member.models import Agent
+from member.models import Agent, Member
 
 
 class AgentsListView(ListView):
@@ -29,6 +30,12 @@ class DefineAgents(DoctorPermissionMixin, CreateView):
     def get_success_url(self):
         return reverse('members:doctor:agents-manger')
 
+    def get_form(self, form_class=None):
+        form = super(DefineAgents, self).get_form(form_class)
+        member_agents_id = [agent.member.id for agent in Agent.objects.all()]
+        form['member'].queryset = Member.objects.exclude(Q(id__in=member_agents_id))
+        return form
+
     def form_valid(self, form):
         instance = form.save(commit=False)
         instance.doctor = self.request.access_level.doctor
@@ -36,6 +43,7 @@ class DefineAgents(DoctorPermissionMixin, CreateView):
         return super(DefineAgents, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
+        print(Member.objects.all())
         context = super(DefineAgents, self).get_context_data(**kwargs)
         context['agents'] = self.request.access_level.doctor.agents.all()
         return context

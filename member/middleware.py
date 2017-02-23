@@ -1,6 +1,6 @@
 from abc import ABCMeta
 
-from member.models import DoctorMember, Agent
+from member.models import DoctorMember, Agent, Member
 
 
 class AbstractAccessLevel(metaclass=ABCMeta):
@@ -71,5 +71,6 @@ class MemberMiddleware(object):
             request.access_level = AgentAccessLevel(agent=agent)
             return
 
-        if hasattr(request.user, 'member'):
-            request.access_level = MemberAccessLevel(member=request.user.member)
+        member = Member.objects.filter(primary_user=request.user).first()
+        if member is not None:
+            request.access_level = MemberAccessLevel(member=member)

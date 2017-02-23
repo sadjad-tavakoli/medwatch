@@ -25,16 +25,16 @@
                 <td>{{ req.date }}</td>
                 <td>{{ req.start_time }}</td>
                 <td>
-                    {% if req.acceptable %}
+{#                    {% if req.acceptable %}#}
                         <form action="accept/">
                             <input type="hidden" name="request_id" value="{{ req.id }}">
                             <input type="submit" value="Accept">
                         </form>
-                    {% else %}
-                        <button disabled>
-                            Time Overlap
-                        </button>
-                    {% endif %}
+{#                    {% else %}#}
+{#                        <button>#}
+{#                            Time Overlap#}
+{#                        </button>#}
+{#                    {% endif %}#}
                 </td>
             </tr>
         {% endfor %}
