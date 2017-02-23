@@ -30,18 +30,22 @@ class AppointmentRequestsView(TemplateView):
         doctor = self.request.access_level.doctor
         doctor_schedule = DoctorSchedule.get_by_doctor(doctor)
         today = date.today()
-        appointment_requests = AppointmentRequest.objects.filter(state=APS_REQUESTED, doctor=doctor, date__gt=today). \
+        appointment_requests = AppointmentRequest.objects.filter(state=APS_REQUESTED,
+                                                                 doctor=doctor, date__gt=today). \
             order_by('created')
-        current_appointments = Appointment.objects.filter(doctor=doctor, date__gt=today).order_by('start_time')
+        current_appointments = Appointment.objects.filter(doctor=doctor, date__gt=today).order_by(
+            'start_time')
         session_interval = doctor_schedule.get_session_interval()
 
         for ap_req in appointment_requests:
             day_appointments = filter(lambda x: x.date == ap_req.date, current_appointments)
             daily_schedule = doctor_schedule.get_daily_schedule(ap_req.date)
-            if ((ap_req.start_time > daily_schedule.end_time - timedelta(minutes=session_interval)) or \
-                        (ap_req.start_time < daily_schedule.start_time) or \
-                        (any(abs((ap_req.start_time - other_ap.start_time).total_seconds()) < session_interval * 60) )
-                        for other_ap in day_appointments):
+            if ((ap_req.start_time > daily_schedule.end_time - timedelta(
+                    minutes=session_interval)) or (
+                        ap_req.start_time < daily_schedule.start_time)
+                or (any(abs((ap_req.start_time - other_ap.start_time).total_seconds())
+                            < session_interval * 60))
+                for other_ap in day_appointments):
                 ap_req.acceptable = False
             else:
                 ap_req.acceptable = True
@@ -65,7 +69,8 @@ class AppointmentRequestResolvingView(View):
         daily_schedule = doctor_schedule.get_daily_schedule(appointment_request.date)
         session_interval = doctor_schedule.get_session_interval()
 
-        overlapping_appointments = Appointment.objects.filter(doctor=doctor, date=appointment_request.date,
+        overlapping_appointments = Appointment.objects.filter(doctor=doctor,
+                                                              date=appointment_request.date,
                                                               start_time__gt=appointment_request.start_time - timedelta(
                                                                   session_interval),
                                                               start_time__lt=appointment_request.start_time + timedelta(
