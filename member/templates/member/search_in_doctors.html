@@ -29,7 +29,7 @@
 
                         <a class="ui tiny image" id="{{ d.pk }}" href="/doctors/{{ d.pk }}">
                             <img style="width: 70px; height: 70px; border-radius: 50%"
-                                 src="{{ object.doctor.image_url }}">
+                                 src="{{ d.image_url }}">
                         </a>
                         <div class="content">
                             <div class="header">{{ d.first_name }} {{ d.last_name }}</div>
