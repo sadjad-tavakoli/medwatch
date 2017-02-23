@@ -60,7 +60,7 @@ class AppointmentRequestsView(TemplateView):
 
 class AppointmentRequestResolvingView(View):
     def get(self, request, *args, **kwargs):
-        request_id = request.GET-['request_id']
+        request_id = request.GET['request_id']
         action = request.GET.get('action', 'accept')
         appointment_request = AppointmentRequest.objects.get(id=request_id)
 
@@ -70,18 +70,12 @@ class AppointmentRequestResolvingView(View):
         session_interval = doctor_schedule.get_session_interval()
 
         overlapping_appointments = Appointment.objects.filter(doctor=doctor,
-                                                              date=appointment_request.date,
-                                                              start_time__gt=appointment_request.start_time - timedelta(
-                                                                  session_interval),
-                                                              start_time__lt=appointment_request.start_time + timedelta(
-                                                                  session_interval))
+                                                              date=appointment_request.date)
 
         if appointment_request.state != APS_REQUESTED or appointment_request.doctor != doctor:
             message = "Operation not permitted!"
         elif action == 'accept' and (
-                        overlapping_appointments.exists() or
-                            appointment_request.start_time > daily_schedule.end_time - timedelta(
-                            minutes=session_interval) or appointment_request.start_time < daily_schedule.start_time):
+                overlapping_appointments.exists()):
             message = "Appointment doesn't fit in schedule!"
         else:
             message = appointment_request.resolve(action)

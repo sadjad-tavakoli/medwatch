@@ -11,7 +11,7 @@ from member.forms.profile_forms import EditProfileForm, DrEditProfileForm
 from member.models import Member, DoctorMember
 
 
-class ProfileView(AgentPermissionMixin, DetailView):
+class ProfileView(DetailView):
     template_name = 'member/profile.html'
     context_object_name = 'member'
 

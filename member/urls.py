@@ -52,7 +52,9 @@ urlpatterns = [
     url(r'^contract-download/', download_contract, name='contraction'),
     url(r'^dr-edit-profile/', DrEditProfile.as_view(), name='dr_edit_profile'),
     url(r'^doctors/([0-9]*)/$', show_doctor_page, name='show_dr_page'),
-    url(r'^doctors/(?P<doctor_id>[0-9]*)/request/$', RequestAppointmentView.as_view(), name='request_appointment'),
-    url(r'^doctors/(?P<doctor_id>[0-9]*)/request/(?P<day>[0-9]*)_(?P<hour>[0-9]*)_(?P<minute>[0-9]*)/$',
+    url(r'^doctors/(?P<doctor_id>[0-9]*)/request/$', RequestAppointmentView.as_view(),
+        name='request_appointment'),
+    url(
+        r'^doctors/(?P<doctor_id>[0-9]*)/request/(?P<day>[0-9]*)_(?P<hour>[0-9]*)_(?P<minute>[0-9]*)/$',
         GetAppointmentView.as_view()),
 ]

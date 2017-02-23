@@ -24,6 +24,9 @@ def search_in_doctors(request):
                         for doctor_name_word in doctor_name_words:
                             if doctor_name_word.lower().__contains__(name_word):
                                 result_doctors.append(doctor)
+                    if doctor.primary_user.username.__contains__(name_word):
+                            result_doctors.append(doctor)
+
                 for address_word in address_words:
                     if doctor.address is not None:
                         doctor_address_words = doctor.address.split(" ")
@@ -43,6 +46,9 @@ def search_in_doctors(request):
                         for doctor_name_word in doctor_name_words:
                             if doctor_name_word.lower().__contains__(name_word):
                                 result_doctors.append(doctor)
+                    if doctor.primary_user.username.__contains__(name_word):
+                        result_doctors.append(doctor)
+
             if name.strip() == "" and address.strip() != "":
                 for address_word in address_words:
                     if doctor.address is not None:
