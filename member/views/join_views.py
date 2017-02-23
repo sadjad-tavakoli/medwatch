@@ -15,7 +15,8 @@ class JoinView(CreateView):
     form_class = JoinForm
 
     def get_success_url(self):
-        return reverse('home')
+        print("sasasaasas")
+        return reverse('members:login')
 
 
 class DoctorJoinView(CreateView):
@@ -24,7 +25,7 @@ class DoctorJoinView(CreateView):
     form_class = DoctorJoinForm
 
     def get_success_url(self):
-        return reverse('home')
+        return reverse('members:login')
 
 
 def download_contract(request):
