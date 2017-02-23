@@ -7,37 +7,62 @@
 {% endblock %}
 <script src="{% static 'jquery-3.1.1.min.js' %}" crossorigin="anonymous"></script>
 {% block inline_body %}
-
     {% if message %}
-        <div style="border: 1px solid; margin: 5px; background-color: yellow"><h3>{{ message }}</h3></div>
+
+        <div class="ui {% if message == "Appointment Accepted" %}green{% else %} red{% endif %} message">
+            <p>{{ message }}</p>
+        </div>
     {% endif %}
     <h1>Appointment Requests</h1>
-    <table>
+    <table class="ui single line table">
+        <thead>
         <tr>
             <th>Patient</th>
             <th>Date</th>
             <th>Time</th>
-            <th>Accept?</th>
+            <th></th>
+            <th></th>
         </tr>
+        </thead>
+        <tbody>
         {% for req in appointment_requests %}
             <tr>
                 <td>{{ req.patient.get_name }}</td>
                 <td>{{ req.date }}</td>
                 <td>{{ req.start_time }}</td>
                 <td>
-{#                    {% if req.acceptable %}#}
-                        <form action="accept/">
-                            <input type="hidden" name="request_id" value="{{ req.id }}">
-                            <input type="submit" value="Accept">
-                        </form>
-{#                    {% else %}#}
-{#                        <button>#}
-{#                            Time Overlap#}
-{#                        </button>#}
-{#                    {% endif %}#}
+                    {#                    {% if req.acceptable %}#}
+                    <div class="ui buttons">
+                        <div class="ui button">
+                            <form action="accept/" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="request_id" value="{{ req.id }}">
+                                <input type="submit" class="positive ui button" value="Accept">
+                            </form>
+                        </div>
+                        <div class="or"></div>
+                        <div class="ui button">
+                            <form action="accept/" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="request_id" value="{{ req.id }}">
+                                <input type="hidden" name="action" value="reject">
+                                <input type="submit" class="negative ui button" value="Reject">
+
+                            </form>
+                        </div>
+                    </div>
+
                 </td>
+
+                {#                    {% else %}#}
+                {#                        <button>#}
+                {#                            Time Overlap#}
+                {#                        </button>#}
+                {#                    {% endif %}#}
             </tr>
         {% endfor %}
+        </tbody>
+
     </table>
 
 {% endblock %}

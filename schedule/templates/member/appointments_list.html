@@ -1,16 +1,17 @@
 {% extends 'base/base_member.html' %}
+{% load static %}
 {% block inline_body %}
     {{ block.super }}
     <div class="ui middle aligned divided list ">
 
         {% for object in object_list %}
             <div class="item">
-                <a class="ui tiny image">
+                <a class="ui tiny image" href="{% url 'members:show_dr_page' object.doctor.pk %}">
                     <img src="{{ object.doctor.image_url }}">
                 </a>
 
                 <div class="content">
-                    <a class="header">{{ object.doctor.get_name }}</a>
+                    <a class="header" href="{% url 'members:show_dr_page' object.doctor.pk %}">{{ object.doctor.get_name }}</a>
 
                     <div class="description">
                         <p>{{ object.date }}-{{ object.id }}-{{ object.doctor.address }}address.

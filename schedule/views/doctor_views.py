@@ -5,6 +5,7 @@ from django.http.response import HttpResponseRedirect
 from django.views.generic.base import TemplateView, View
 from extra_views.advanced import UpdateWithInlinesView
 
+from med_watch.permissions import DoctorPermissionMixin
 from schedule.forms import DoctorScheduleForm, DailyScheduleInline
 from schedule.models import DoctorSchedule, AppointmentRequest, APS_REQUESTED, Appointment
 
@@ -58,10 +59,10 @@ class AppointmentRequestsView(TemplateView):
         return context_data
 
 
-class AppointmentRequestResolvingView(View):
-    def get(self, request, *args, **kwargs):
-        request_id = request.GET['request_id']
-        action = request.GET.get('action', 'accept')
+class AppointmentRequestResolvingView(DoctorPermissionMixin, View):
+    def post(self, request, *args, **kwargs):
+        request_id = request.POST['request_id']
+        action = request.POST.get('action', 'accept')
         appointment_request = AppointmentRequest.objects.get(id=request_id)
 
         doctor = self.request.access_level.doctor
@@ -82,3 +83,8 @@ class AppointmentRequestResolvingView(View):
 
         return HttpResponseRedirect(
             "{}?message={}".format(reverse('schedule:requests'), message))
+
+
+# class AppointmentREjectView(DoctorPermissionMixin, View):
+#     def get(self, request, *args, **kwargs):
+
